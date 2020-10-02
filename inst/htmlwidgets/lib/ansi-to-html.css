@@ -1,5 +1,7 @@
-body {
+div.findInFiles {
   color: white;
   background-color: #002;
-  overflow: auto !important;
+  overflow: auto;
+  outline: 5px solid #002;
 }
+
