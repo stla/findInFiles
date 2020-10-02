@@ -1,5 +1,3 @@
-#library(R.utils)
-
 # !! in Haskell, do a "cumulative" foldr when depth !!
 # => utilise filemanip (cf stlapblog)
 
@@ -10,16 +8,16 @@ isPositiveInteger <- function(x){
 getFiles <- function(ext, depth){
   stopifnot(isPositiveInteger(depth))
   wildcards <- Reduce(
-    file.path, x = rep("*", depth), init = paste0("*.", ext), 
+    file.path, x = rep("*", depth), init = paste0("*.", ext),
     right = TRUE, accumulate = TRUE
   )
   Sys.glob(wildcards)
 }
 
 grepInFiles <- function(
-  ext, pattern, depth = NULL, 
-  wholeword = FALSE, ignoreCase = FALSE, perl = FALSE,
-  directory = "."
+  ext, pattern, depth,
+  wholeword, ignoreCase, perl,
+  directory
 ){
   wd <- setwd(directory)
   on.exit(setwd(wd))
@@ -32,7 +30,7 @@ grepInFiles <- function(
       "grep",
       args = c(
         paste0("--include=\\*.", ext), opts, "-r", "-e", shQuote(pattern)
-      ), 
+      ),
       stdout = TRUE
     )
   }else{
@@ -44,9 +42,3 @@ grepInFiles <- function(
     )
   }
 }
-
-grepInFiles("Rmd", "document$")
-
-grepInFiles("Rmd", "document$", depth = 0)
-
-

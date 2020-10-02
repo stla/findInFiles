@@ -1,0 +1,6 @@
+dependencies:
+ - name: ansi-to-html
+   version: 0.6.14
+   src: htmlwidgets/lib
+   script: ansi-to-html_bundle.js
+   stylesheet: ansi-to-html.css
