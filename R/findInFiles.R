@@ -1,6 +1,17 @@
-#' <Add Title>
+#' Find pattern in files
+#' @description Find a pattern in some files.
 #'
-#' <Add Description>
+#' @param ext file extension, e.g. \code{"R"} or \code{"js"}
+#' @param pattern pattern to search for, a regular expression, e.g.
+#'   \code{"function"} or \code{"^function"}
+#' @param depth depth of the search, \code{NULL} for an entire recursive
+#'   search (subdirectories, subdirectories of subdirectories, etc.), or an
+#'   integer: \code{0} to search in the root directory only, \code{1} to
+#'   search in the root directory and its subdirectories, etc.
+#' @param wholeword logical, whether to match the whole pattern
+#' @param ignoreCase logical, whether to ignore the case
+#' @param perl logical, whether \code{pattern} is a Perl regular expression
+#' @param directory path to the root directory to search from
 #'
 #' @import htmlwidgets
 #'

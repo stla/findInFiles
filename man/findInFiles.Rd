@@ -2,7 +2,7 @@
 % Please edit documentation in R/findInFiles.R
 \name{findInFiles}
 \alias{findInFiles}
-\title{<Add Title>}
+\title{Find pattern in files}
 \usage{
 findInFiles(
   ext,
@@ -14,6 +14,25 @@ findInFiles(
   directory = "."
 )
 }
+\arguments{
+\item{ext}{file extension, e.g. \code{"R"} or \code{"js"}}
+
+\item{pattern}{pattern to search for, a regular expression, e.g.
+\code{"function"} or \code{"^function"}}
+
+\item{depth}{depth of the search, \code{NULL} for an entire recursive
+search (subdirectories, subdirectories of subdirectories, etc.), or an
+integer: \code{0} to search in the root directory only, \code{1} to
+search in the root directory and its subdirectories, etc.}
+
+\item{wholeword}{logical, whether to match the whole pattern}
+
+\item{ignoreCase}{logical, whether to ignore the case}
+
+\item{perl}{logical, whether \code{pattern} is a Perl regular expression}
+
+\item{directory}{path to the root directory to search from}
+}
 \description{
-<Add Description>
+Find a pattern in some files.
 }
