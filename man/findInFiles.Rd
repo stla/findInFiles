@@ -11,7 +11,7 @@ findInFiles(
   wholeword = FALSE,
   ignoreCase = FALSE,
   perl = FALSE,
-  directory = "."
+  root = "."
 )
 }
 \arguments{
@@ -31,7 +31,7 @@ search in the root directory and its subdirectories, etc.}
 
 \item{perl}{logical, whether \code{pattern} is a Perl regular expression}
 
-\item{directory}{path to the root directory to search from}
+\item{root}{path to the root directory to search from}
 }
 \description{
 Find a pattern in some files.
@@ -39,5 +39,5 @@ Find a pattern in some files.
 \examples{
 library(findInFiles)
 folder <- system.file("example", package = "findInFiles")
-findInFiles("R", "function", directory = folder)
+findInFiles("R", "function", root = folder)
 }

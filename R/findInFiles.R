@@ -11,24 +11,24 @@
 #' @param wholeword logical, whether to match the whole pattern
 #' @param ignoreCase logical, whether to ignore the case
 #' @param perl logical, whether \code{pattern} is a Perl regular expression
-#' @param directory path to the root directory to search from
+#' @param root path to the root directory to search from
 #'
 #' @import htmlwidgets
 #' @export
 #'
 #' @examples library(findInFiles)
 #' folder <- system.file("example", package = "findInFiles")
-#' findInFiles("R", "function", directory = folder)
+#' findInFiles("R", "function", root = folder)
 findInFiles <- function(
   ext, pattern, depth = NULL,
   wholeword = FALSE, ignoreCase = FALSE, perl = FALSE,
-  directory = "."
+  root = "."
 ){
 
   ansi <- paste0(grepInFiles(
     ext = ext, pattern = pattern, depth = depth,
     wholeword = wholeword, ignoreCase = ignoreCase, perl = perl,
-    directory = directory
+    directory = root
   ), collapse = "\n")
 
   # forward options using x
