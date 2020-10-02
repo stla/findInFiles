@@ -11,6 +11,8 @@ findInFiles(
   wholeword = FALSE,
   ignoreCase = FALSE,
   perl = FALSE,
+  excludePattern = NULL,
+  excludeFoldersPattern = NULL,
   root = "."
 )
 }
@@ -30,6 +32,12 @@ search in the root directory and its subdirectories, etc.}
 \item{ignoreCase}{logical, whether to ignore the case}
 
 \item{perl}{logical, whether \code{pattern} is a Perl regular expression}
+
+\item{excludePattern}{a pattern, exclude from search files and folders
+which match this pattern}
+
+\item{excludeFoldersPattern}{a pattern, exclude from search folders
+which match this pattern}
 
 \item{root}{path to the root directory to search from}
 }
