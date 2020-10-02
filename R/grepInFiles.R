@@ -1,6 +1,3 @@
-# !! in Haskell, do a "cumulative" foldr when depth !!
-# => utilise filemanip (cf stlapblog)
-
 isPositiveInteger <- function(x){
   is.numeric(x) && (length(x) == 1L) && (floor(x) == x)
 }
@@ -19,6 +16,9 @@ grepInFiles <- function(
   wholeword, ignoreCase, perl,
   directory
 ){
+  if(Sys.which("grep") == ""){
+    stop("This package requires the 'grep' command-line utility.")
+  }
   wd <- setwd(directory)
   on.exit(setwd(wd))
   opts <- c("--colour=always", "-n")
