@@ -38,17 +38,16 @@ grepInFiles <- function(
   if(!is.null(excludePattern)){
     stopifnot(isString(excludePattern))
     opts <- c(opts, paste0("--exclude=", shQuote(excludePattern)))
-  }
+  } #TODO: multiple patterns - https://stackoverflow.com/questions/41702134/grep-exclude-from-how-to-include-multiple-files
   if(!is.null(excludeFoldersPattern)){
     stopifnot(isString(excludeFoldersPattern))
     opts <- c(opts, paste0("--exclude-dir=", shQuote(excludeFoldersPattern)))
   }
   results <- if(is.null(depth)){
-    suppressWarnings(
-      system2(
+    suppressWarnings(system2(
       "grep",
       args = c(
-        paste0("--include=\\*.", ext), opts, "-r", "-e", shQuote(pattern)
+        paste0("--include=\\*\\.", ext), opts, "-r", "-e", shQuote(pattern)
       ),
       stdout = TRUE, stderr = TRUE
     ))
