@@ -14,8 +14,11 @@
 #' @param directory path to the root directory to search from
 #'
 #' @import htmlwidgets
-#'
 #' @export
+#'
+#' @examples library(findInFiles)
+#' folder <- system.file("example", package = "findInFiles")
+#' findInFiles("R", "function", directory = folder)
 findInFiles <- function(
   ext, pattern, depth = NULL,
   wholeword = FALSE, ignoreCase = FALSE, perl = FALSE,

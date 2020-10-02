@@ -13,7 +13,7 @@ HTMLWidgets.widget({
           fg: "#FFF",
           bg: "#000",
           newline: true,
-          escapeXML: false,
+          escapeXML: true,
           stream: false
         });
         var html = convert.toHtml(x.ansi);

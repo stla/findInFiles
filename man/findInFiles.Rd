@@ -36,3 +36,8 @@ search in the root directory and its subdirectories, etc.}
 \description{
 Find a pattern in some files.
 }
+\examples{
+library(findInFiles)
+folder <- system.file("example", package = "findInFiles")
+findInFiles("R", "function", directory = folder)
+}
