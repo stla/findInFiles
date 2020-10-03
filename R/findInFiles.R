@@ -22,8 +22,12 @@
 #' @export
 #'
 #' @examples library(findInFiles)
+#'
 #' folder <- system.file("example", package = "findInFiles")
 #' findInFiles("R", "function", root = folder)
+#'
+#' folder <- system.file("www", "shared", package = "shiny")
+#' findInFiles("css", "outline", excludePattern = "*.min.css", root = folder)
 findInFiles <- function(
   ext, pattern, depth = NULL,
   wholeWord = FALSE, ignoreCase = FALSE, perl = FALSE,
@@ -72,6 +76,79 @@ findInFiles <- function(
 #' @name findInFiles-shiny
 #'
 #' @export
+#'
+#' @examples library(findInFiles)
+#' library(shiny)
+#'
+#' onKeyDown <- HTML(
+#'   'function onKeyDown(event) {',
+#'   '  var key = event.which || event.keyCode;',
+#'   '  if(key === 13) {',
+#'   '    Shiny.setInputValue(',
+#'   '      "pattern", event.target.value, {priority: "event"}',
+#'   '    );',
+#'   '  }',
+#'   '}'
+#' )
+#'
+#' ui <- fluidPage(
+#'   tags$head(tags$script(onKeyDown)),
+#'   br(),
+#'   sidebarLayout(
+#'     sidebarPanel(
+#'       selectInput(
+#'         "ext", "Extension",
+#'         choices = c("R", "js", "css")
+#'       ),
+#'       tags$div(
+#'         class = "form-group shiny-input-container",
+#'         tags$label(
+#'           class = "control-label",
+#'           "Pattern"
+#'         ),
+#'         tags$input(
+#'           type = "text",
+#'           class = "form-control",
+#'           onkeydown = "onKeyDown(event);",
+#'           placeholder = "Press Enter when ready"
+#'         )
+#'       ),
+#'       numericInput(
+#'         "depth", "Depth (set -1 for unlimited depth)",
+#'         value = 0, min = -1, step = 1
+#'       ),
+#'       checkboxInput(
+#'         "wholeWord", "Whole word"
+#'       ),
+#'       checkboxInput(
+#'         "ignoreCase", "Ignore case"
+#'       )
+#'     ),
+#'     mainPanel(
+#'       FIFOutput("results")
+#'     )
+#'   )
+#' )
+#'
+#'
+#' server <- function(input, output){
+#'
+#'   output[["results"]] <- renderFIF({
+#'     req(input[["pattern"]])
+#'     findInFiles(
+#'       ext = isolate(input[["ext"]]),
+#'       pattern = input[["pattern"]],
+#'       depth = isolate(input[["depth"]]),
+#'       wholeWord = isolate(input[["wholeWord"]]),
+#'       ignoreCase = isolate(input[["ignoreCase"]])
+#'     )
+#'   })
+#'
+#' }
+#'
+#' if(interactive()){
+#'   shinyApp(ui, server)
+#' }
 FIFOutput <- function(outputId, width = "100%", height = "400px"){
   htmlwidgets::shinyWidgetOutput(
     outputId, "findInFiles", width, height, package = "findInFiles"

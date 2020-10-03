@@ -47,6 +47,10 @@ Find a pattern in some files.
 }
 \examples{
 library(findInFiles)
+
 folder <- system.file("example", package = "findInFiles")
 findInFiles("R", "function", root = folder)
+
+folder <- system.file("www", "shared", package = "shiny")
+findInFiles("css", "outline", excludePattern = "*.min.css", root = folder)
 }

@@ -5,3 +5,7 @@ div.findInFiles {
   outline: 5px solid #002;
 }
 
+div.findInFiles:empty {
+  background-color: transparent;
+  outline: none;
+}
