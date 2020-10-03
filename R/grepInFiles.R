@@ -17,7 +17,7 @@ getFiles <- function(ext, depth){
 
 grepInFiles <- function(
   ext, pattern, depth,
-  wholeword, ignoreCase, perl,
+  wholeWord, ignoreCase, perl,
   excludePattern, excludeFoldersPattern,
   directory
 ){
@@ -26,13 +26,13 @@ grepInFiles <- function(
   }
   stopifnot(isString(ext))
   stopifnot(isString(pattern))
-  stopifnot(is.logical(wholeword))
+  stopifnot(is.logical(wholeWord))
   stopifnot(is.logical(ignoreCase))
   stopifnot(is.logical(perl))
   wd <- setwd(directory)
   on.exit(setwd(wd))
   opts <- c("--colour=always", "-n")
-  if(wholeword) opts <- c(opts, "-w")
+  if(wholeWord) opts <- c(opts, "-w")
   if(ignoreCase) opts <- c(opts, "-i")
   if(perl) opts <- c(opts, "-P")
   if(!is.null(excludePattern)){
@@ -43,7 +43,14 @@ grepInFiles <- function(
     stopifnot(isString(excludeFoldersPattern))
     opts <- c(opts, paste0("--exclude-dir=", shQuote(excludeFoldersPattern)))
   }
-  results <- if(is.null(depth)){
+  # return(system2(
+  #   "grep",
+  #   args = c(
+  #     paste0("--include=\\*\\.", ext), opts, "-r", "-e", shQuote(pattern)
+  #   ),
+  #   stdout = TRUE, stderr = TRUE
+  # ))
+  results <- if(is.null(depth) || depth < 0){
     suppressWarnings(system2(
       "grep",
       args = c(
@@ -59,8 +66,12 @@ grepInFiles <- function(
       stdout = TRUE, stderr = TRUE
     ))
   }
-  if(!is.null(attr(results, "status"))){
-    stop("An error occured. Possibly invalid 'grep' command.")
+  if(!is.null(status <- attr(results, "status"))){
+    if(status == 1){
+      message("No results.")
+    }else{
+      stop("An error occured. Possibly invalid 'grep' command.")
+    }
   }
   results
 }

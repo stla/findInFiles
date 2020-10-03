@@ -4,11 +4,12 @@
 #' @param ext file extension, e.g. \code{"R"} or \code{"js"}
 #' @param pattern pattern to search for, a regular expression, e.g.
 #'   \code{"function"} or \code{"^function"}
-#' @param depth depth of the search, \code{NULL} for an entire recursive
-#'   search (subdirectories, subdirectories of subdirectories, etc.), or an
-#'   integer: \code{0} to search in the root directory only, \code{1} to
-#'   search in the root directory and its subdirectories, etc.
-#' @param wholeword logical, whether to match the whole pattern
+#' @param depth depth of the search, \code{NULL} or a negative number for an
+#'   entire recursive search (subdirectories, subdirectories of subdirectories,
+#'   etc.), otherwise a positive integer: \code{0} to search in the root
+#'   directory only, \code{1} to search in the root directory and its
+#'   subdirectories, etc.
+#' @param wholeWord logical, whether to match the whole pattern
 #' @param ignoreCase logical, whether to ignore the case
 #' @param perl logical, whether \code{pattern} is a Perl regular expression
 #' @param excludePattern a pattern, exclude from search files and folders
@@ -25,14 +26,14 @@
 #' findInFiles("R", "function", root = folder)
 findInFiles <- function(
   ext, pattern, depth = NULL,
-  wholeword = FALSE, ignoreCase = FALSE, perl = FALSE,
+  wholeWord = FALSE, ignoreCase = FALSE, perl = FALSE,
   excludePattern = NULL, excludeFoldersPattern = NULL,
   root = "."
 ){
 
   ansi <- paste0(grepInFiles(
     ext = ext, pattern = pattern, depth = depth,
-    wholeword = wholeword, ignoreCase = ignoreCase, perl = perl,
+    wholeWord = wholeWord, ignoreCase = ignoreCase, perl = perl,
     excludePattern = excludePattern,
     excludeFoldersPattern = excludeFoldersPattern,
     directory = root

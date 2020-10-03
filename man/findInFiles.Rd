@@ -8,7 +8,7 @@ findInFiles(
   ext,
   pattern,
   depth = NULL,
-  wholeword = FALSE,
+  wholeWord = FALSE,
   ignoreCase = FALSE,
   perl = FALSE,
   excludePattern = NULL,
@@ -22,12 +22,13 @@ findInFiles(
 \item{pattern}{pattern to search for, a regular expression, e.g.
 \code{"function"} or \code{"^function"}}
 
-\item{depth}{depth of the search, \code{NULL} for an entire recursive
-search (subdirectories, subdirectories of subdirectories, etc.), or an
-integer: \code{0} to search in the root directory only, \code{1} to
-search in the root directory and its subdirectories, etc.}
+\item{depth}{depth of the search, \code{NULL} or a negative number for an
+entire recursive search (subdirectories, subdirectories of subdirectories,
+etc.), otherwise a positive integer: \code{0} to search in the root
+directory only, \code{1} to search in the root directory and its
+subdirectories, etc.}
 
-\item{wholeword}{logical, whether to match the whole pattern}
+\item{wholeWord}{logical, whether to match the whole pattern}
 
 \item{ignoreCase}{logical, whether to ignore the case}
 
