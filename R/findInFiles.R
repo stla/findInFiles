@@ -12,9 +12,9 @@
 #' @param wholeWord logical, whether to match the whole pattern
 #' @param ignoreCase logical, whether to ignore the case
 #' @param perl logical, whether \code{pattern} is a Perl regular expression
-#' @param excludePattern a pattern, exclude from search files and folders
+#' @param excludePattern a pattern; exclude from search the files and folders
 #'   which match this pattern
-#' @param excludeFoldersPattern a pattern, exclude from search folders
+#' @param excludeFoldersPattern a pattern; exclude from search the folders
 #'   which match this pattern
 #' @param root path to the root directory to search from
 #'
