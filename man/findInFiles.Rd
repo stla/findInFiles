@@ -34,10 +34,10 @@ subdirectories, etc.}
 
 \item{perl}{logical, whether \code{pattern} is a Perl regular expression}
 
-\item{excludePattern}{a pattern, exclude from search files and folders
+\item{excludePattern}{a pattern; exclude from search the files and folders
 which match this pattern}
 
-\item{excludeFoldersPattern}{a pattern, exclude from search folders
+\item{excludeFoldersPattern}{a pattern; exclude from search the folders
 which match this pattern}
 
 \item{root}{path to the root directory to search from}
