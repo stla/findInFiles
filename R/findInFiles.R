@@ -35,6 +35,11 @@ findInFiles <- function(
   root = "."
 ){
 
+  if(grepl("sunos", tolower(Sys.info()["sysname"]))){ # skip on Solaris
+    message("This package is currently not supported by 'Solaris' platforms.")
+    return(invisible(NULL))
+  }
+
   ansi <- paste0(grepInFiles(
     ext = ext, pattern = pattern, depth = depth,
     wholeWord = wholeWord, ignoreCase = ignoreCase, perl = perl,
