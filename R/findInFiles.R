@@ -35,8 +35,8 @@ findInFiles <- function(
   root = "."
 ){
 
-  if(grepl("sunos", tolower(Sys.info()["sysname"]))){ # skip on Solaris
-    message("This package is currently not supported by 'Solaris' platforms.")
+  if(inSolaris() && Sys.which("ggrep") == ""){
+    message("On Solaris, this package requires the 'ggrep' system command.")
     return(invisible(NULL))
   }
 

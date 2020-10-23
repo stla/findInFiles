@@ -15,14 +15,24 @@ getFiles <- function(ext, depth){
   Sys.glob(wildcards)
 }
 
+inSolaris <- function(){
+  grepl("sunos", tolower(Sys.info()["sysname"]))
+}
+
 grepInFiles <- function(
   ext, pattern, depth,
   wholeWord, ignoreCase, perl,
   excludePattern, excludeFoldersPattern,
   directory
 ){
-  if(Sys.which("grep") == ""){
-    stop("This package requires the 'grep' command-line utility.")
+  if(inSolaris()){
+    if(Sys.which("ggrep") == ""){
+      stop("This package requires the 'ggrep' command-line utility.")
+    }
+  }else{
+    if(Sys.which("grep") == ""){
+      stop("This package requires the 'grep' command-line utility.")
+    }
   }
   stopifnot(isString(ext))
   stopifnot(isString(pattern))
@@ -50,9 +60,10 @@ grepInFiles <- function(
   #   ),
   #   stdout = TRUE, stderr = TRUE
   # ))
+  command <- ifelse(inSolaris(), "ggrep", "grep")
   results <- if(is.null(depth) || depth < 0){
     suppressWarnings(system2(
-      "grep",
+      command,
       args = c(
         paste0("--include=\\*\\.", ext), opts, "-r", "-e", shQuote(pattern)
       ),
@@ -61,7 +72,7 @@ grepInFiles <- function(
   }else{
     files <- getFiles(ext, depth)
     suppressWarnings(system2(
-      "grep",
+      command,
       args = c(shQuote(pattern), shQuote(files), opts),
       stdout = TRUE, stderr = TRUE
     ))
