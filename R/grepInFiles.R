@@ -1,9 +1,13 @@
 isPositiveInteger <- function(x){
-  is.numeric(x) && (length(x) == 1L) && (floor(x) == x)
+  is.numeric(x) && (length(x) == 1L) && !is.na(x) && (floor(x) == x)
 }
 
 isString <- function(x){
-  is.character(x) && (length(x) == 1L)
+  is.character(x) && (length(x) == 1L) && !is.na(x)
+}
+
+isBoolean <- function(x){
+  is.logical(x) && (length(x) == 1L) && !is.na(x)
 }
 
 getFiles <- function(ext, depth){
@@ -23,7 +27,7 @@ grepInFiles <- function(
   ext, pattern, depth,
   wholeWord, ignoreCase, perl,
   excludePattern, excludeFoldersPattern,
-  directory
+  directory, output
 ){
   if(inSolaris()){
     if(Sys.which("ggrep") == ""){
@@ -36,12 +40,16 @@ grepInFiles <- function(
   }
   stopifnot(isString(ext))
   stopifnot(isString(pattern))
-  stopifnot(is.logical(wholeWord))
-  stopifnot(is.logical(ignoreCase))
-  stopifnot(is.logical(perl))
+  stopifnot(isBoolean(wholeWord))
+  stopifnot(isBoolean(ignoreCase))
+  stopifnot(isBoolean(perl))
   wd <- setwd(directory)
   on.exit(setwd(wd))
-  opts <- c("--colour=always", "-n")
+  if(output == "dataframe"){
+    opts <- c("--colour=never", "-n")
+  }else{
+    opts <- c("--colour=always", "-n")
+  }
   if(wholeWord) opts <- c(opts, "-w")
   if(ignoreCase) opts <- c(opts, "-i")
   if(perl) opts <- c(opts, "-P")

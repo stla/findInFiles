@@ -13,7 +13,8 @@ findInFiles(
   perl = FALSE,
   excludePattern = NULL,
   excludeFoldersPattern = NULL,
-  root = "."
+  root = ".",
+  output = "viewer"
 )
 }
 \arguments{
@@ -41,6 +42,13 @@ which match this pattern}
 which match this pattern}
 
 \item{root}{path to the root directory to search from}
+
+\item{output}{one of \code{"viewer"}, \code{"dataframe"} or
+\code{"viewer+dataframe"}; see examples}
+}
+\value{
+A dataframe if \code{output="dataframe"}, otherwise a
+  \code{htmlwidget} object.
 }
 \description{
 Find a pattern in some files.
@@ -50,6 +58,10 @@ library(findInFiles)
 
 folder <- system.file("example", package = "findInFiles")
 findInFiles("R", "function", root = folder)
+findInFiles("R", "function", root = folder, output = "dataframe")
+fif <- findInFiles("R", "function", root = folder, output = "viewer+dataframe")
+FIF2dataframe(fif)
+fif
 
 folder <- system.file("www", "shared", package = "shiny")
 findInFiles("css", "outline", excludePattern = "*.min.css", root = folder)
