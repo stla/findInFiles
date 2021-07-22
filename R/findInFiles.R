@@ -29,10 +29,11 @@
 #' @export
 #'
 #' @examples library(findInFiles)
-#'
 #' folder <- system.file("example", package = "findInFiles")
 #' findInFiles("R", "function", root = folder)
+#'
 #' findInFiles("R", "function", root = folder, output = "dataframe")
+#'
 #' fif <- findInFiles("R", "function", root = folder, output = "viewer+dataframe")
 #' FIF2dataframe(fif)
 #' fif
@@ -67,7 +68,7 @@ findInFiles <- function(
     }else{
       strippedResults <- results
     }
-    resultsMatrix <- stringr::str_split_fixed(strippedResults, ":", n=3)
+    resultsMatrix <- stringr::str_split_fixed(strippedResults, ":", n = 3L)
     colnames(resultsMatrix) <- c("file", "line", "code")
     resultsDF <- as.data.frame(resultsMatrix)
     resultsDF[["line"]] <- as.integer(resultsDF[["line"]])

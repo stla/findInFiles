@@ -55,10 +55,11 @@ Find a pattern in some files.
 }
 \examples{
 library(findInFiles)
-
 folder <- system.file("example", package = "findInFiles")
 findInFiles("R", "function", root = folder)
+
 findInFiles("R", "function", root = folder, output = "dataframe")
+
 fif <- findInFiles("R", "function", root = folder, output = "viewer+dataframe")
 FIF2dataframe(fif)
 fif
