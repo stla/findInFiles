@@ -46,9 +46,9 @@ grepInFiles <- function(
   wd <- setwd(directory)
   on.exit(setwd(wd))
   if(output == "dataframe"){
-    opts <- c("--colour=never", "-n")
+    opts <- c("--colour=never", "-n", "--with-filename")
   }else{
-    opts <- c("--colour=always", "-n")
+    opts <- c("--colour=always", "-n", "--with-filename")
   }
   if(wholeWord) opts <- c(opts, "-w")
   if(ignoreCase) opts <- c(opts, "-i")

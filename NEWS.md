@@ -1,3 +1,9 @@
+# findInFiles 0.2.1
+
+Added the option '--with-filename' to 'grep'. Without this option, the file 
+name does not appear in the output when there a unique file in the results.
+
+
 # findInFiles 0.2.0
 
 The `findInFiles` function has a new argument `output`. It can be `"viewer"` 
