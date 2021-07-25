@@ -70,7 +70,7 @@ findInFiles <- function(
     }
     resultsMatrix <- stringr::str_split_fixed(strippedResults, ":", n = 3L)
     colnames(resultsMatrix) <- c("file", "line", "code")
-    resultsDF <- as.data.frame(resultsMatrix)
+    resultsDF <- as.data.frame(resultsMatrix, stringsAsFactors = FALSE)
     resultsDF[["line"]] <- as.integer(resultsDF[["line"]])
     class(resultsDF) <- c(oldClass(resultsDF), "findInFiles")
     if(output == "dataframe"){
