@@ -52,6 +52,14 @@ findInFiles <- function(
     return(invisible(NULL))
   }
 
+  stopifnot(isString(ext))
+
+  if(isBinaryExtension(ext)){
+    stop(
+      sprintf("This file extension ('%s') is not allowed.", ext)
+    )
+  }
+
   output <- match.arg(output, c("viewer", "dataframe", "viewer+dataframe"))
 
   results <- grepInFiles(
@@ -78,7 +86,11 @@ findInFiles <- function(
     }
   }
 
-  ansi <- paste0(results, collapse = "\n")
+  if(is.null(results)){
+    ansi <- "No results."
+  }else{
+    ansi <- paste0(results, collapse = "\n")
+  }
 
   # forward options using x
   if(output == "viewer"){
