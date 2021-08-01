@@ -66,8 +66,20 @@ findInFiles <- function(
     output,
     c("viewer", "dataframe", "viewer+dataframe", "tibble", "viewer+tibble")
   )
-  if(output == "dataframe") output <- "tibble"
-  if(output == "viewer+dataframe") output <- "viewer+tibble"
+  if(output == "dataframe"){
+    output <- "tibble"
+    message(
+      'The option `output="dataframe"` is deprecated; use `output="tibble"` ',
+      'instead.'
+    )
+  }
+  if(output == "viewer+dataframe"){
+    output <- "viewer+tibble"
+    message(
+      'The option `output="viewer+dataframe"` is deprecated; ',
+      'use `output="viewer+tibble"` instead.'
+    )
+  }
 
   results <- grepInFiles(
     ext = ext, pattern = pattern, depth = depth,
@@ -171,10 +183,11 @@ FIF2tibble <- function(fif){
 #' @title Output of `findInFiles` as a dataframe
 #'
 #' @description Returns the results of \code{\link{findInFiles}} in a
-#'   dataframe, when the option \code{output = "viewer+tibble"} is used.
+#'   dataframe, when the option \code{output = "viewer+tibble"} or
+#'   \code{output = "tibble"} is used.
 #'
 #' @param fif the output of \code{\link{findInFiles}} used with the
-#'   option \code{output = "viewer+tibble"}
+#'   option \code{output = "viewer+tibble"} or \code{output = "tibble"}
 #'
 #' @return The results of \code{\link{findInFiles}} in a dataframe.
 #'

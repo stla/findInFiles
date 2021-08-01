@@ -8,14 +8,15 @@ FIF2dataframe(fif)
 }
 \arguments{
 \item{fif}{the output of \code{\link{findInFiles}} used with the
-option \code{output = "viewer+tibble"}}
+option \code{output = "viewer+tibble"} or \code{output = "tibble"}}
 }
 \value{
 The results of \code{\link{findInFiles}} in a dataframe.
 }
 \description{
 Returns the results of \code{\link{findInFiles}} in a
-  dataframe, when the option \code{output = "viewer+tibble"} is used.
+  dataframe, when the option \code{output = "viewer+tibble"} or
+  \code{output = "tibble"} is used.
 }
 \examples{
 folder <- system.file("example", package = "findInFiles")
