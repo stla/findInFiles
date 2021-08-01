@@ -130,22 +130,25 @@ findInFiles <- function(
 
 }
 
-#' Output of `findInFiles` as a dataframe
+#' @title Output of `findInFiles` as a tibble
 #'
-#' Returns the results of \code{\link{findInFiles}} in a dataframe, when the
-#'   option \code{output = "viewer+dataframe"} is used.
+#' @description Returns the results of \code{\link{findInFiles}} in a
+#'   tibble, when the option \code{output = "viewer+tibble"} is used.
 #'
 #' @param fif the output of \code{\link{findInFiles}} used with the
-#'   option \code{output = "viewer+dataframe"}
+#'   option \code{output = "viewer+tibble"}
 #'
-#' @return The results of \code{\link{findInFiles}} in a dataframe.
+#' @return The results of \code{\link{findInFiles}} in a tibble.
 #' @export
 #'
 #' @examples folder <- system.file("example", package = "findInFiles")
-#' fif <- findInFiles("R", "function", root = folder, output = "viewer+dataframe")
-#' FIF2dataframe(fif)
+#' fif <- findInFiles("R", "function", root = folder, output = "viewer+tibble")
+#' FIF2tibble(fif)
 #' fif
-FIF2dataframe <- function(fif){
+FIF2tibble <- function(fif){
+  if(is.null(fif)){
+    return(NULL)
+  }
   if(is.data.frame(fif) && inherits(fif, "findInFiles")){
     return(fif)
   }
@@ -158,13 +161,38 @@ FIF2dataframe <- function(fif){
   output <- fif[["x"]][["results"]]
   if(is.null(output)){
     message(
-      'You did not set the option `output = "viewer+dataframe"`.'
+      'You did not set the option `output = "viewer+tibble"`.'
     )
     return(invisible(NULL))
   }
   output
 }
 
+#' @title Output of `findInFiles` as a dataframe
+#'
+#' @description Returns the results of \code{\link{findInFiles}} in a
+#'   dataframe, when the option \code{output = "viewer+tibble"} is used.
+#'
+#' @param fif the output of \code{\link{findInFiles}} used with the
+#'   option \code{output = "viewer+tibble"}
+#'
+#' @return The results of \code{\link{findInFiles}} in a dataframe.
+#'
+#' @importFrom crayon strip_style
+#' @export
+#'
+#' @examples folder <- system.file("example", package = "findInFiles")
+#' fif <- findInFiles("R", "function", root = folder, output = "viewer+tibble")
+#' FIF2dataframe(fif)
+#' fif
+FIF2dataframe <- function(fif){
+  tbl <- FIF2tibble(fif)
+  if(is.null(tbl)){
+    return(NULL)
+  }
+  tbl[["code"]] <- strip_style(tbl[["code"]])
+  as.data.frame(tbl)
+}
 
 #' Shiny bindings for \code{findInFiles}
 #'

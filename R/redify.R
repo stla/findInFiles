@@ -1,7 +1,3 @@
-library(vctrs)
-
-#vctrs::vec_data(tbl$code)
-
 #' @importFrom stringi stri_sub_replace_all
 #' @importFrom crayon red
 #' @noRd
