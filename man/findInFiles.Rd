@@ -43,11 +43,11 @@ which match this pattern}
 
 \item{root}{path to the root directory to search from}
 
-\item{output}{one of \code{"viewer"}, \code{"dataframe"} or
-\code{"viewer+dataframe"}; see examples}
+\item{output}{one of \code{"viewer"}, \code{"tibble"} or
+\code{"viewer+tibble"}; see examples}
 }
 \value{
-A dataframe if \code{output="dataframe"}, otherwise a
+A tibble if \code{output="tibble"}, otherwise a
   \code{htmlwidget} object.
 }
 \description{
@@ -58,9 +58,10 @@ library(findInFiles)
 folder <- system.file("example", package = "findInFiles")
 findInFiles("R", "function", root = folder)
 
-findInFiles("R", "function", root = folder, output = "dataframe")
+findInFiles("R", "function", root = folder, output = "tibble")
 
-fif <- findInFiles("R", "function", root = folder, output = "viewer+dataframe")
+fif <- findInFiles("R", "function", root = folder, output = "viewer+tibble")
+FIF2tibble(fif)
 FIF2dataframe(fif)
 fif
 

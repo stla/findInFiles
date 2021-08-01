@@ -17,24 +17,26 @@
 #' @param excludeFoldersPattern a pattern; exclude from search the folders
 #'   which match this pattern
 #' @param root path to the root directory to search from
-#' @param output one of \code{"viewer"}, \code{"dataframe"} or
-#'   \code{"viewer+dataframe"}; see examples
+#' @param output one of \code{"viewer"}, \code{"tibble"} or
+#'   \code{"viewer+tibble"}; see examples
 #'
-#' @return A dataframe if \code{output="dataframe"}, otherwise a
+#' @return A tibble if \code{output="tibble"}, otherwise a
 #'   \code{htmlwidget} object.
 #'
 #' @import htmlwidgets
 #' @importFrom stringr str_split_fixed
 #' @importFrom crayon strip_style
+#' @importFrom tibble tibble
 #' @export
 #'
 #' @examples library(findInFiles)
 #' folder <- system.file("example", package = "findInFiles")
 #' findInFiles("R", "function", root = folder)
 #'
-#' findInFiles("R", "function", root = folder, output = "dataframe")
+#' findInFiles("R", "function", root = folder, output = "tibble")
 #'
-#' fif <- findInFiles("R", "function", root = folder, output = "viewer+dataframe")
+#' fif <- findInFiles("R", "function", root = folder, output = "viewer+tibble")
+#' FIF2tibble(fif)
 #' FIF2dataframe(fif)
 #' fif
 #'
@@ -60,7 +62,12 @@ findInFiles <- function(
     )
   }
 
-  output <- match.arg(output, c("viewer", "dataframe", "viewer+dataframe"))
+  output <- match.arg(
+    output,
+    c("viewer", "dataframe", "viewer+dataframe", "tibble", "viewer+tibble")
+  )
+  if(output == "dataframe") output <- "tibble"
+  if(output == "viewer+dataframe") output <- "viewer+tibble"
 
   results <- grepInFiles(
     ext = ext, pattern = pattern, depth = depth,
@@ -70,8 +77,8 @@ findInFiles <- function(
     directory = root, output = output
   )
 
-  if(output %in% c("dataframe", "viewer+dataframe")){
-    if(output == "viewer+dataframe"){
+  if(output %in% c("tibble", "viewer+tibble")){
+    if(output == "viewer+tibble"){
       strippedResults <- strip_style(results)
     }else{
       strippedResults <- results
@@ -80,8 +87,15 @@ findInFiles <- function(
     colnames(resultsMatrix) <- c("file", "line", "code")
     resultsDF <- as.data.frame(resultsMatrix, stringsAsFactors = FALSE)
     resultsDF[["line"]] <- as.integer(resultsDF[["line"]])
+    if(!is.null(results)){
+      opts <- attr(results, "options")
+      resultsDF[["code"]] <- do.call(
+        function(...){redifyVector(resultsDF[["code"]], ...)}, opts
+      )
+    }
+    resultsDF <- tibble(resultsDF)
     class(resultsDF) <- c(oldClass(resultsDF), "findInFiles")
-    if(output == "dataframe"){
+    if(output == "tibble"){
       return(resultsDF)
     }
   }
@@ -97,7 +111,7 @@ findInFiles <- function(
     x = list(
       ansi = ansi
     )
-  }else{ # viewer+dataframe
+  }else{ # viewer+tibble
     x = list(
       ansi = ansi,
       results = resultsDF
@@ -137,7 +151,7 @@ FIF2dataframe <- function(fif){
   }
   if(!inherits(fif, c("findInFiles", "htmlwidget"))){
     stop(
-      "The `fif` argument is not a output of `findInFiles`.",
+      "The `fif` argument is not an output of `findInFiles`.",
       call. = TRUE
     )
   }

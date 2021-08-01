@@ -29,7 +29,7 @@ grepInFiles <- function(
   stopifnot(isBoolean(perl))
   wd <- setwd(directory)
   on.exit(setwd(wd))
-  if(output == "dataframe"){
+  if(output == "tibble"){
     opts <- c("--colour=never", "-n", "--with-filename")
   }else{
     opts <- c("--colour=always", "-n", "--with-filename")
@@ -83,5 +83,11 @@ grepInFiles <- function(
       stop("An error occured. Possibly invalid 'grep' command.")
     }
   }
+  attr(results, "options") <- list(
+    "pattern"    = pattern,
+    "wholeWord"  = wholeWord,
+    "ignoreCase" = ignoreCase,
+    "perl"       = perl
+  )
   results
 }
