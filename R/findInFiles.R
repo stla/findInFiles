@@ -192,6 +192,7 @@ FIF2tibble <- function(fif){
 #' @return The results of \code{\link{findInFiles}} in a dataframe.
 #'
 #' @importFrom crayon strip_style
+#' @importFrom vctrs vec_data
 #' @export
 #'
 #' @examples folder <- system.file("example", package = "findInFiles")
@@ -203,7 +204,7 @@ FIF2dataframe <- function(fif){
   if(is.null(tbl)){
     return(NULL)
   }
-  tbl[["code"]] <- strip_style(tbl[["code"]])
+  tbl[["code"]] <- vec_data(strip_style(tbl[["code"]]))
   as.data.frame(tbl)
 }
 
