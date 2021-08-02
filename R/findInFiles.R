@@ -62,10 +62,7 @@ findInFiles <- function(
     )
   }
 
-  output <- match.arg(
-    output,
-    c("viewer", "dataframe", "viewer+dataframe", "tibble", "viewer+tibble")
-  )
+  stopifnot(isString(output))
   if(output == "dataframe"){
     output <- "tibble"
     message(
@@ -80,6 +77,11 @@ findInFiles <- function(
       'use `output="viewer+tibble"` instead.'
     )
   }
+
+  output <- match.arg(
+    output,
+    c("viewer", "tibble", "viewer+tibble")
+  )
 
   results <- grepInFiles(
     ext = ext, pattern = pattern, depth = depth,
