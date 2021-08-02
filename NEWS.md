@@ -1,4 +1,4 @@
-# findInFiles 0.2.1
+# findInFiles 0.3.0
 
 * Added the option '--with-filename' to 'grep'. Without this option, the file 
 name does not appear in the output when there is a unique file in the results.
