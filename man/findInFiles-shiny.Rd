@@ -24,9 +24,15 @@ string and have \code{"px"} appended}
 \item{quoted}{logical, whether \code{expr} is a quoted expression (with
 \code{quote()})}
 }
+\value{
+\code{FIFOutput} returns an output element that can be included in a
+  Shiny UI definition, and \code{renderFIF} returns a
+  \code{shiny.render.function} object that can be included in a Shiny server
+  definition.
+}
 \description{
-Output and render functions for using \code{findInFiles} within Shiny
-applications and interactive Rmd documents.
+Output and render functions for using \code{findInFiles} within
+  Shiny applications and interactive Rmd documents.
 }
 \examples{
 library(findInFiles)

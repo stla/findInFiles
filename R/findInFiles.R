@@ -208,10 +208,10 @@ FIF2dataframe <- function(fif){
   as.data.frame(tbl)
 }
 
-#' Shiny bindings for \code{findInFiles}
+#' @title Shiny bindings for \code{findInFiles}
 #'
-#' Output and render functions for using \code{findInFiles} within Shiny
-#' applications and interactive Rmd documents.
+#' @description Output and render functions for using \code{findInFiles} within
+#'   Shiny applications and interactive Rmd documents.
 #'
 #' @param outputId output variable to read from
 #' @param width,height a valid CSS unit (like \code{"100\%"},
@@ -222,8 +222,14 @@ FIF2dataframe <- function(fif){
 #' @param quoted logical, whether \code{expr} is a quoted expression (with
 #'   \code{quote()})
 #'
+#' @return \code{FIFOutput} returns an output element that can be included in a
+#'   Shiny UI definition, and \code{renderFIF} returns a
+#'   \code{shiny.render.function} object that can be included in a Shiny server
+#'   definition.
+#'
 #' @name findInFiles-shiny
 #'
+#' @import htmlwidgets
 #' @export
 #'
 #' @examples library(findInFiles)
