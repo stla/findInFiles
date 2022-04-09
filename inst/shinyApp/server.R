@@ -16,7 +16,8 @@ shinyServer(function(input, output, session){
   output[["wd"]] <- renderText({
     path <- parseDirPath(roots, input[["folder"]])
     if(length(path) == 0L){
-      getwd()
+      setwd(roots[1L])
+      roots[1L]
     }else{
       setwd(path)
       path
