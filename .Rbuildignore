@@ -4,3 +4,4 @@
 ^inst/screenshots$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
+^\.github$
