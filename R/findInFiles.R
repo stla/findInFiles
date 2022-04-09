@@ -327,5 +327,6 @@ renderFIF <- function(expr, env = parent.frame(), quoted = FALSE){
 #' @importFrom shiny shinyAppDir
 #' @export
 shinyFIF <- function(){
+  options(FIFWD = getwd())
   shinyAppDir(system.file("shinyApp", package = "findInFiles"))
 }

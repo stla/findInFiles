@@ -1,4 +1,3 @@
-
 shinyUI(fluidPage(
   tags$head(
     tags$script(src = "shinyFIF.js"),
@@ -28,7 +27,7 @@ shinyUI(fluidPage(
       ),
       numericInput(
         "depth", "Depth (set -1 for unlimited depth):",
-        value = -1, min = -1, max = 10, step = 1
+        value = 1, min = -1, step = 1
       ),
       fluidRow(
         column(

@@ -6,5 +6,5 @@ library(shinyjqui)
 library(shinyFiles)
 library(shinyvalidate)
 
-roots <- getVolumes()()
+roots <- c(wd = getOption("FIFWD"), getVolumes()())
 
