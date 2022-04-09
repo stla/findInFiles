@@ -6,7 +6,7 @@ shinyServer(function(input, output, session){
     sv_regex("^[a-zA-Z0-9\\+]+$", "Only alphanumeric or 'c++'")
   )
   iv$add_rule("pattern", sv_required())
-  # iv$add_rule("depth", sv_integer())
+  iv$add_rule("depth", sv_integer())
   iv$enable()
 
   shinyDirChoose(
@@ -100,11 +100,12 @@ shinyServer(function(input, output, session){
         yaml = "yaml",
         yml = "yaml"
       )
+      content <- paste0(readLines(file), collapse = "\n")
       tab <- verticalTabPanel(
         title = file,
         aceEditor(
           outputId = outputId,
-          value = paste0(readLines(file), collapse = "\n"),
+          value = content,
           mode = ifelse(is.null(acemode), "plain_text", acemode),
           theme = "cobalt",
           tabSize = 2,
@@ -136,6 +137,23 @@ shinyServer(function(input, output, session){
     }
     index <- match(file, Tabsets())
     editor <- names(Tabsets())[index]
+    btnid <- paste0("btn_", editor)
+    if(is.null(input[[btnid]])){
+      print("INSERT")
+      insertUI(
+        sprintf("#%s .ace_scroller", editor),
+        "beforeEnd",
+        actionButton(
+          btnid, "Save", icon = icon("save"),
+          class = "btn-success",
+          style = "position: absolute; bottom: 2px; right: 2px;",
+          onmousedown = "event.stopPropagation();",
+          onclick = sprintf(
+            'Save(event, "%s", "%s");', URLencode(content), basename(file)
+          )
+        )
+      )
+    }
     if(!updated){
       updateVerticalTabsetPanel(
         session,
@@ -144,6 +162,14 @@ shinyServer(function(input, output, session){
       )
     }
     session$sendCustomMessage("goto", list(editor = editor, line = line))
+  })
+
+  observeEvent(input[["save"]], {
+    filename <- input[["save"]][["name"]]
+    editor <- input[["save"]][["editor"]]
+    session[["sendCustomMessage"]](
+      "save", list(name = filename, content = input[[editor]])
+    )
   })
 
   output[["results"]] <- renderFIF({

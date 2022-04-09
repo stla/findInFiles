@@ -1,5 +1,15 @@
+function Save(event, content, file) {
+  console.log(event);
+  var a = document.createElement("a");
+  document.body.append(a);
+  a.download = file;
+  var b64 = btoa(unescape(encodeURIComponent(decodeURI(content))));
+  a.href = "data:text/plain;base64," + b64;
+  a.click();
+  a.remove();
+}
+
 $(document).ready(function () {
-  var spinner = $( "#depth" ).spinner();
   Shiny.addCustomMessageHandler("closeButton", function (editor) {
     var a = document.createElement("A");
     a.style.textDecoration = "underline";
@@ -17,7 +27,7 @@ $(document).ready(function () {
         priority: "event"
       });
     };
-    setTimeout(function() {
+    setTimeout(function () {
       $("a.list-group-item.active").prepend(a);
     }, 1000);
   });
@@ -29,5 +39,4 @@ $(document).ready(function () {
       editor.focus();
     }, 1000);
   });
-
 });
