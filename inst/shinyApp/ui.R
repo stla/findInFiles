@@ -15,7 +15,8 @@ shinyUI(fluidPage(
         label = "Change",
         title = "Choose a folder",
         buttonType = "primary",
-        class = "btn-block"
+        class = "btn-block",
+        onclick = '$("#results").empty();'
       ),
       br(),
       textInput(
