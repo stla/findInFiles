@@ -1,0 +1,14 @@
+a.list-group-item>h4 {
+  font-size: 12px;
+  word-break: break-all;
+}
+
+#wd {
+  font-size: 12px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+#hwd {
+  margin-bottom: 5px;
+}

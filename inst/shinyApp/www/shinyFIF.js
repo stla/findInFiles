@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  var spinner = $( "#depth" ).spinner();
   Shiny.addCustomMessageHandler("closeButton", function (editor) {
     var a = document.createElement("A");
     a.style.textDecoration = "underline";

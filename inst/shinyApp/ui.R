@@ -2,39 +2,52 @@
 shinyUI(fluidPage(
   tags$head(
     tags$script(src = "shinyFIF.js"),
-    tags$script(onKeyDown),
-    tags$style(HTML(css))
+    tags$link(rel = "stylesheet", href = "shinyFIF.css")
   ),
   br(),
   sidebarLayout(
     sidebarPanel(
       width = 3,
-      selectInput(
-        "ext", "Extension",
-        choices = c("R", "js", "css")
+      h4(id = "hwd", "Current folder:"),
+      textOutput("wd"),
+      shinyDirButton(
+        "folder",
+        label = "Change",
+        title = "Choose a folder",
+        buttonType = "primary",
+        class = "btn-block"
       ),
-      tags$div(
-        class = "form-group shiny-input-container",
-        tags$label(
-          class = "control-label",
-          "Pattern"
-        ),
-        tags$input(
-          type = "text",
-          class = "form-control",
-          onkeydown = "onKeyDown(event);",
-          placeholder = "Press Enter when ready"
-        )
+      br(),
+      textInput(
+        "ext", "Extension:",
+        value = "R"
+      ),
+      textInput(
+        "pattern", "Pattern:"
       ),
       numericInput(
-        "depth", "Depth (set -1 for unlimited depth)",
-        value = -1, min = -1, step = 1
+        "depth", "Depth (set -1 for unlimited depth):",
+        value = -1, min = -1, max = 10, step = 1
       ),
-      checkboxInput(
-        "wholeWord", "Whole word"
+      fluidRow(
+        column(
+          6,
+          checkboxInput(
+            "wholeWord", "Whole word"
+          )
+        ),
+        column(
+          6,
+          checkboxInput(
+            "ignoreCase", "Ignore case"
+          )
+        )
       ),
-      checkboxInput(
-        "ignoreCase", "Ignore case"
+      wellPanel(
+        actionButton(
+          "run", "Find",
+          class = "btn-danger btn-block"
+        )
       )
     ),
     mainPanel(

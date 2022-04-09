@@ -1,6 +1,27 @@
 shinyServer(function(input, output, session){
 
-  setwd("C:/SL/MyPackages/findInFiles")
+  iv <- InputValidator$new()
+  iv$add_rule(
+    "ext",
+    sv_regex("^[a-zA-Z0-9\\+]+$", "Only alphanumeric or 'c++'")
+  )
+  iv$add_rule("pattern", sv_required())
+  # iv$add_rule("depth", sv_integer())
+  iv$enable()
+
+  shinyDirChoose(
+    input, "folder", roots = roots
+  )
+
+  output$wd <- renderText({
+    path <- parseDirPath(roots, input[["folder"]])
+    if(length(path) == 0L){
+      getwd()
+    }else{
+      setwd(path)
+      path
+    }
+  })
 
   Tabsets <- reactiveVal(character(0L))
   Editors <- reactiveVal(character(0L))
@@ -84,8 +105,9 @@ shinyServer(function(input, output, session){
         aceEditor(
           outputId = outputId,
           value = paste0(readLines(file), collapse = "\n"),
-          mode = acemode,
+          mode = ifelse(is.null(acemode), "plain_text", acemode),
           theme = "cobalt",
+          tabSize = 2,
           height = "40vh"
         ),
         box_height = NULL
@@ -125,10 +147,10 @@ shinyServer(function(input, output, session){
   })
 
   output[["results"]] <- renderFIF({
-    req(input[["pattern"]])
+    req(input[["run"]])
     findInFiles(
       ext = isolate(input[["ext"]]),
-      pattern = input[["pattern"]],
+      pattern = isolate(input[["pattern"]]),
       depth = isolate(input[["depth"]]),
       wholeWord = isolate(input[["wholeWord"]]),
       ignoreCase = isolate(input[["ignoreCase"]])

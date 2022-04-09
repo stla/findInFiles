@@ -3,6 +3,10 @@ library(shiny)
 library(shinyAce)
 library(shinyWidgets)
 library(shinyjqui)
+library(shinyFiles)
+library(shinyvalidate)
+
+roots <- getVolumes()()
 
 onKeyDown <- HTML(
   'function onKeyDown(event) {',
@@ -14,10 +18,3 @@ onKeyDown <- HTML(
   '  }',
   '}'
 )
-
-css <- '
-a.list-group-item>h4 {
-  font-size: 12px;
-  word-break: break-all;
-}
-'
