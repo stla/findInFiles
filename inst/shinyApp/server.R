@@ -22,6 +22,8 @@ shinyServer(function(input, output, session){
     print(Tabsets())
     notabset <- length(Tabsets()) == 0L
     file <- input$filewithline$file
+    line <- input$filewithline$line
+    updated <- FALSE
     if(!is.element(file, Tabsets())){
       outputId <- paste0("editor", length(Editors()) + 1L)
       Editors(c(Editors(), outputId))
@@ -58,8 +60,18 @@ shinyServer(function(input, output, session){
       }
       session$sendCustomMessage("closeButton", outputId)
       print(Tabsets())
-
+      updated <- TRUE
     }
+    index <- match(file, Tabsets())
+    editor <- names(Tabsets())[index]
+    if(!updated){
+      updateVerticalTabsetPanel(
+        session,
+        "tabset",
+        selected = file
+      )
+    }
+    session$sendCustomMessage("goto", list(editor = editor, line = line))
   })
 
   output[["results"]] <- renderFIF({

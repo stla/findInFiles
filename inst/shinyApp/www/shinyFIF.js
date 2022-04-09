@@ -20,4 +20,13 @@ $(document).ready(function () {
       $("a.list-group-item.active").prepend(a);
     }, 1000);
   });
+
+  Shiny.addCustomMessageHandler("goto", function (x) {
+    setTimeout(function () {
+      var editor = ace.edit(x.editor);
+      editor.env.editor.gotoLine(x.line, 0, true);
+      editor.focus();
+    }, 1000);
+  });
+
 });

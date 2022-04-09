@@ -318,3 +318,14 @@ renderFIF <- function(expr, env = parent.frame(), quoted = FALSE){
   if(!quoted){ expr <- substitute(expr) } # force quoted
   htmlwidgets::shinyRenderWidget(expr, FIFOutput, env, quoted = TRUE)
 }
+
+
+#' @title shiny xx
+#' @description xxx
+#'
+#' @return xx
+#' @importFrom shiny shinyAppDir
+#' @export
+shinyFIF <- function(){
+  shinyAppDir(system.file("shinyApp", package = "findInFiles"))
+}
