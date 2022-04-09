@@ -13,7 +13,7 @@ shinyServer(function(input, output, session){
     input, "folder", roots = roots
   )
 
-  output$wd <- renderText({
+  output[["wd"]] <- renderText({
     path <- parseDirPath(roots, input[["folder"]])
     if(length(path) == 0L){
       getwd()
@@ -26,10 +26,10 @@ shinyServer(function(input, output, session){
   Tabsets <- reactiveVal(character(0L))
   Editors <- reactiveVal(character(0L))
 
-  observeEvent(input$closetab, {
-    print(input$closetab)
-    # file <- Tabsets()[input$closetab]
-    index <- match(input$closetab, names(Tabsets()))
+  observeEvent(input[["closetab"]], {
+    print(input[["closetab"]])
+    # file <- Tabsets()[input[["closetab"]]]
+    index <- match(input[["closetab"]], names(Tabsets()))
     Tabsets(Tabsets()[-index])
     print(Tabsets())
     if(length(Tabsets()) == 0L) {
@@ -39,11 +39,11 @@ shinyServer(function(input, output, session){
     }
   })
 
-  observeEvent(input$filewithline, {
+  observeEvent(input[["filewithline"]], {
     print(Tabsets())
     notabset <- length(Tabsets()) == 0L
-    file <- input$filewithline$file
-    line <- input$filewithline$line
+    file <- input[["filewithline"]][["file"]]
+    line <- input[["filewithline"]][["line"]]
     updated <- FALSE
     if(!is.element(file, Tabsets())){
       outputId <- paste0("editor", length(Editors()) + 1L)
@@ -161,19 +161,15 @@ shinyServer(function(input, output, session){
         selected = file
       )
     }
-    session$sendCustomMessage("goto", list(editor = editor, line = line))
+    session$sendCustomMessage("goto", list("editor" = editor, "line" = line))
   })
 
-  observeEvent(input[["save"]], {
-    filename <- input[["save"]][["name"]]
-    editor <- input[["save"]][["editor"]]
-    session[["sendCustomMessage"]](
-      "save", list(name = filename, content = input[[editor]])
-    )
+  Run <- eventReactive(input[["run"]], {
+    iv$is_valid()
   })
 
   output[["results"]] <- renderFIF({
-    req(input[["run"]])
+    req(Run())
     findInFiles(
       ext = isolate(input[["ext"]]),
       pattern = isolate(input[["pattern"]]),

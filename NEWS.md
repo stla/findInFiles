@@ -1,3 +1,8 @@
+# findInFiles 0.3.0.9000
+
+Shiny app.
+
+
 # findInFiles 0.3.0
 
 * Added the option '--with-filename' to 'grep'. Without this option, the file 

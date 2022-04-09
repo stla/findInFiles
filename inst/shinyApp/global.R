@@ -8,13 +8,3 @@ library(shinyvalidate)
 
 roots <- getVolumes()()
 
-onKeyDown <- HTML(
-  'function onKeyDown(event) {',
-  '  var key = event.which || event.keyCode;',
-  '  if(key === 13) {',
-  '    Shiny.setInputValue(',
-  '      "pattern", event.target.value, {priority: "event"}',
-  '    );',
-  '  }',
-  '}'
-)
