@@ -39,6 +39,8 @@ shinyServer(function(input, output, session){
     }
   })
 
+  showToast <- TRUE
+
   observeEvent(input[["filewithline"]], {
     print(Tabsets())
     notabset <- length(Tabsets()) == 0L
@@ -162,6 +164,16 @@ shinyServer(function(input, output, session){
       )
     }
     session$sendCustomMessage("goto", list("editor" = editor, "line" = line))
+    if(showToast){
+      show_toast(
+        "Do you know?",
+        "You can resize the editors.",
+        type = "info",
+        timer = 5000,
+        position = "top-end"
+      )
+      showToast <<- FALSE
+    }
   })
 
   Run <- eventReactive(input[["run"]], {
