@@ -42,3 +42,9 @@ legend {
   margin-bottom: unset;
   color: inherit;
 }
+
+.swal2-popup.swal2-toast {
+  border-width: 2px;
+  border-style: groove;
+  border-color: orange;
+}
