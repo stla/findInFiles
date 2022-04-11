@@ -1,4 +1,4 @@
-# findInFiles 0.3.0.9001
+# findInFiles 0.4.0
 
 Now the package provides a Shiny application (`shinyFIF()`) allowing to run 
 `findInFiles` and to navigate in the results.
