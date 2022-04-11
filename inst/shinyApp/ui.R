@@ -7,15 +7,19 @@ shinyUI(fluidPage(
   sidebarLayout(
     sidebarPanel(
       width = 3,
-      h4(id = "hwd", "Current folder:"),
-      textOutput("wd"),
-      shinyDirButton(
-        "folder",
-        label = "Change",
-        title = "Choose a folder",
-        buttonType = "primary",
-        class = "btn-block",
-        onclick = '$("#results").empty();'
+      tags$fieldset(
+        tags$legend(
+          h4(id = "hwd", "Current folder")
+        ),
+        textOutput("wd"),
+        shinyDirButton(
+          "folder",
+          label = "Change",
+          title = "Choose a folder",
+          buttonType = "primary",
+          class = "btn-block",
+          onclick = '$("#results").empty();'
+        )
       ),
       br(),
       textInput(
@@ -44,6 +48,7 @@ shinyUI(fluidPage(
         )
       ),
       wellPanel(
+        style = "border-color: #e4c4c4",
         actionButton(
           "run", "Find",
           class = "btn-danger btn-block"

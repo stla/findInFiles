@@ -13,3 +13,32 @@ a.list-group-item > h4 {
 #hwd {
   margin-bottom: 5px;
 }
+
+fieldset {
+  display: block;
+  margin-inline-start: 2px;
+  margin-inline-end: 2px;
+  padding-block-start: 0.35em;
+  padding-inline-start: 0.75em;
+  padding-inline-end: 0.75em;
+  padding-block-end: 0.625em;
+  min-inline-size: min-content;
+  border-width: 2px;
+  border-style: groove;
+  border-color: mediumaquamarine;
+  border-image: initial;
+  border-radius: 5px;
+}
+
+legend {
+  display: block;
+  padding-inline-start: 2px;
+  padding-inline-end: 2px;
+  border-width: initial;
+  border-style: none;
+  border-color: initial;
+  border-image: initial;
+  width: unset;
+  margin-bottom: unset;
+  color: inherit;
+}

@@ -27,6 +27,21 @@ shinyServer(function(input, output, session){
   Tabsets <- reactiveVal(character(0L))
   Editors <- reactiveVal(character(0L))
 
+  negativeDepth <- reactive({
+    if(input[["depth"]] < 0) TRUE
+  })
+
+  observeEvent(negativeDepth(), {
+    show_toast(
+      title = "Unlimited depth",
+      text = "Be sure that the current folder is not too deep",
+      type = "warning",
+      timer = 6000,
+      position = "bottom-start"
+
+    )
+  }, once = TRUE)
+
   observeEvent(input[["closetab"]], {
     print(input[["closetab"]])
     # file <- Tabsets()[input[["closetab"]]]
