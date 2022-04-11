@@ -6,3 +6,7 @@
 
 
 ![](https://raw.githubusercontent.com/stla/findInFiles/main/inst/screenshots/findInFiles.gif)
+
+As of version 0.4.0, a Shiny app is provided:
+
+![](https://raw.githubusercontent.com/stla/findInFiles/main/inst/screenshots/shiny.gif)
