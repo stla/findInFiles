@@ -9,7 +9,7 @@ shinyUI(fluidPage(
       width = 3,
       tags$fieldset(
         tags$legend(
-          h4(id = "hwd", "Current folder")
+          actionButton("btnwd", "Current folder", class = "btn-info")
         ),
         textOutput("wd"),
         shinyDirButton(

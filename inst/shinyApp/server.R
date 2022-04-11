@@ -24,6 +24,16 @@ shinyServer(function(input, output, session){
     }
   })
 
+  observeEvent(input[["btnwd"]], {
+    tree <- capture.output(dir_tree(recurse = 2, type = "directory"))
+    showModal(
+      modalDialog(
+        tags$pre(paste0(tree, collapse = "\n")),
+        title = "Current folder (showing two levels)"
+      )
+    )
+  })
+
   Tabsets <- reactiveVal(character(0L))
   Editors <- reactiveVal(character(0L))
 

@@ -17,7 +17,7 @@ License: GPL-3
 Encoding: UTF-8
 SystemRequirements: grep
 Imports: htmlwidgets, stringr, crayon, vctrs, tibble, stringi, shiny
-Suggests: shinyAce, shinyWidgets, shinyjqui, shinyFiles, shinyvalidate
+Suggests: shinyAce, shinyWidgets, shinyjqui, shinyFiles, shinyvalidate, fs
 URL: https://github.com/stla/findInFiles
 BugReports: https://github.com/stla/findInFiles/issues
 RoxygenNote: 7.1.2
