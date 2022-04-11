@@ -23,7 +23,7 @@
 #' @return A tibble if \code{output="tibble"}, otherwise a
 #'   \code{htmlwidget} object.
 #'
-#' @import htmlwidgets
+#' @importFrom htmlwidgets createWidget
 #' @importFrom stringr str_split_fixed
 #' @importFrom crayon strip_style
 #' @importFrom tibble tibble
@@ -133,7 +133,7 @@ findInFiles <- function(
   }
 
   # create widget
-  htmlwidgets::createWidget(
+  createWidget(
     name = "findInFiles",
     x = x,
     width = NULL,
