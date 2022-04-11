@@ -38,16 +38,12 @@ shinyServer(function(input, output, session){
       type = "warning",
       timer = 6000,
       position = "bottom-start"
-
     )
   }, once = TRUE)
 
   observeEvent(input[["closetab"]], {
-    print(input[["closetab"]])
-    # file <- Tabsets()[input[["closetab"]]]
     index <- match(input[["closetab"]], names(Tabsets()))
     Tabsets(Tabsets()[-index])
-    print(Tabsets())
     if(length(Tabsets()) == 0L) {
       removeUI("#tabset-tabbable")
     }else{
@@ -58,7 +54,6 @@ shinyServer(function(input, output, session){
   showToast <- TRUE
 
   observeEvent(input[["filewithline"]], {
-    print(Tabsets())
     notabset <- length(Tabsets()) == 0L
     file <- input[["filewithline"]][["file"]]
     line <- input[["filewithline"]][["line"]]
@@ -150,14 +145,12 @@ shinyServer(function(input, output, session){
         )
       }
       session$sendCustomMessage("closeButton", outputId)
-      print(Tabsets())
       updated <- TRUE
     }
     index <- match(file, Tabsets())
     editor <- names(Tabsets())[index]
     btnid <- paste0("btn_", editor)
     if(is.null(input[[btnid]])){
-      print("INSERT")
       insertUI(
         sprintf("#%s .ace_scroller", editor),
         "beforeEnd",
