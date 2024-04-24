@@ -8,7 +8,7 @@ getFiles <- function(ext, depth){
 }
 
 grepInFiles <- function(
-  ext, pattern, depth,
+  ext, pattern, depth, maxCount,
   wholeWord, ignoreCase, perl,
   excludePattern, excludeFoldersPattern,
   directory, output
@@ -33,6 +33,10 @@ grepInFiles <- function(
     opts <- c("--colour=never", "-n", "--with-filename")
   }else{
     opts <- c("--colour=always", "-n", "--with-filename")
+  }
+  if(!is.null(maxCount)) {
+    stopifnot(isPositiveInteger(maxCount))
+    opts <- c(opts, sprintf("-m %d", maxCount))
   }
   if(wholeWord) opts <- c(opts, "-w")
   if(ignoreCase) opts <- c(opts, "-i")
@@ -77,11 +81,20 @@ grepInFiles <- function(
   }
   if(!is.null(status <- attr(results, "status"))){
     if(status == 1L){
-      message("No results.")
+      message("No result.")
       return(invisible(NULL))
     }else{
       stop("An error occured. Possibly invalid 'grep' command.")
     }
+  }
+  nresults <- length(results)
+  if(nresults == 1L) {
+    message("One result.")
+  } else {
+    message(sprintf("%d results.", nresults))
+  }
+  if(!is.null(maxCount) && maxCount == nresults) {
+    message("Reached maximal number of results.")
   }
   attr(results, "options") <- list(
     "pattern"    = pattern,

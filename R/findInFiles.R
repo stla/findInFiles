@@ -9,6 +9,8 @@
 #'   etc.), otherwise a positive integer: \code{0} to search in the root
 #'   directory only, \code{1} to search in the root directory and its
 #'   subdirectories, etc.
+#' @param maxCount maximal number of results, \code{NULL} for an unlimited
+#'   number, otherwise a positive integer
 #' @param wholeWord logical, whether to match the whole pattern
 #' @param ignoreCase logical, whether to ignore the case
 #' @param perl logical, whether \code{pattern} is a Perl regular expression
@@ -43,7 +45,7 @@
 #' folder <- system.file("www", "shared", package = "shiny")
 #' findInFiles("css", "outline", excludePattern = "*.min.css", root = folder)
 findInFiles <- function(
-  ext, pattern, depth = NULL,
+  ext, pattern, depth = NULL, maxCount = NULL,
   wholeWord = FALSE, ignoreCase = FALSE, perl = FALSE,
   excludePattern = NULL, excludeFoldersPattern = NULL,
   root = ".", output = "viewer"
@@ -84,7 +86,7 @@ findInFiles <- function(
   )
 
   results <- grepInFiles(
-    ext = ext, pattern = pattern, depth = depth,
+    ext = ext, pattern = pattern, depth = depth, maxCount = maxCount,
     wholeWord = wholeWord, ignoreCase = ignoreCase, perl = perl,
     excludePattern = excludePattern,
     excludeFoldersPattern = excludeFoldersPattern,
@@ -114,8 +116,10 @@ findInFiles <- function(
     }
   }
 
+  maxCountReached <- isTRUE(length(results) == maxCount)
+
   if(is.null(results)){
-    ansi <- "No results."
+    ansi <- "No result."
   }else{
     ansi <- paste0(results, collapse = "\n")
   }
@@ -133,7 +137,7 @@ findInFiles <- function(
   }
 
   # create widget
-  createWidget(
+  widget <- createWidget(
     name = "findInFiles",
     x = x,
     width = NULL,
@@ -141,6 +145,8 @@ findInFiles <- function(
     package = "findInFiles",
     elementId = NULL
   )
+  attr(widget, "maxCountReached") <- maxCountReached
+  widget
 
 }
 

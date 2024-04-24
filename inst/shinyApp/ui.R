@@ -9,7 +9,7 @@ shinyUI(fluidPage(
       width = 3,
       tags$fieldset(
         tags$legend(
-          actionButton("btnwd", "Current folder", class = "btn-info")
+          actionButton("btnwd", "Current folder", class = "btn-info btn-sm")
         ),
         textOutput("wd"),
         shinyDirButton(
@@ -17,7 +17,7 @@ shinyUI(fluidPage(
           label = "Change",
           title = "Choose a folder",
           buttonType = "primary",
-          class = "btn-block",
+          class = "btn-block btn-sm",
           onclick = '$("#results").empty();'
         )
       ),
@@ -30,8 +30,15 @@ shinyUI(fluidPage(
         "pattern", "Pattern:"
       ),
       numericInput(
-        "depth", "Depth (set -1 for unlimited depth):",
+        "depth", "Depth; set -1 for unlimited:",
         value = 1, min = -1, step = 1
+      ),
+      wellPanel(
+        style = "border-color: #e4c4c4",
+        actionButton(
+          "run", "Find",
+          class = "btn-danger btn-block"
+        )
       ),
       fluidRow(
         column(
@@ -47,12 +54,9 @@ shinyUI(fluidPage(
           )
         )
       ),
-      wellPanel(
-        style = "border-color: #e4c4c4",
-        actionButton(
-          "run", "Find",
-          class = "btn-danger btn-block"
-        )
+      numericInput(
+        "maxCount", "Max number of results; set 0 for unlimited:",
+        value = 100, min = 0, step = 50
       )
     ),
     mainPanel(

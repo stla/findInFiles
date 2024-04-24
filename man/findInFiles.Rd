@@ -8,6 +8,7 @@ findInFiles(
   ext,
   pattern,
   depth = NULL,
+  maxCount = NULL,
   wholeWord = FALSE,
   ignoreCase = FALSE,
   perl = FALSE,
@@ -28,6 +29,9 @@ entire recursive search (subdirectories, subdirectories of subdirectories,
 etc.), otherwise a positive integer: \code{0} to search in the root
 directory only, \code{1} to search in the root directory and its
 subdirectories, etc.}
+
+\item{maxCount}{maximal number of results, \code{NULL} for an unlimited
+number, otherwise a positive integer}
 
 \item{wholeWord}{logical, whether to match the whole pattern}
 

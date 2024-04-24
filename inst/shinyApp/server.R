@@ -7,6 +7,7 @@ shinyServer(function(input, output, session){
   )
   iv$add_rule("pattern", sv_required())
   iv$add_rule("depth", sv_integer())
+  iv$add_rule("maxCount", sv_integer())
   iv$enable()
 
   shinyDirChoose(
@@ -25,10 +26,18 @@ shinyServer(function(input, output, session){
   })
 
   observeEvent(input[["btnwd"]], {
-    tree <- capture.output(dir_tree(recurse = 2, type = "directory"))
+    msg <- tryCatch({
+      tree <- capture.output(dir_tree(recurse = 1, type = "directory"))
+      tags$pre(paste0(tree, collapse = "\n"))
+    }, error = function(e) {
+      tags$span(
+        "Failed to scan the current folder.",
+        style = "color: red;"
+      )
+    })
     showModal(
       modalDialog(
-        tags$pre(paste0(tree, collapse = "\n")),
+        msg,
         title = "Current folder (showing two levels)"
       )
     )
@@ -38,6 +47,7 @@ shinyServer(function(input, output, session){
   Editors <- reactiveVal(character(0L))
 
   negativeDepth <- reactive({
+    req(input[["depth"]] %% 1 == 0)
     if(input[["depth"]] < 0) TRUE
   })
 
@@ -50,6 +60,12 @@ shinyServer(function(input, output, session){
       position = "bottom-start"
     )
   }, once = TRUE)
+
+  maxCount <- reactive({
+    if(isTRUE(input[["maxCount"]] > 0)) {
+      input[["maxCount"]]
+    }
+  })
 
   observeEvent(input[["closetab"]], {
     index <- match(input[["closetab"]], names(Tabsets()))
@@ -201,13 +217,24 @@ shinyServer(function(input, output, session){
 
   output[["results"]] <- renderFIF({
     req(Run())
-    findInFiles(
+    fifWidget <- findInFiles(
       ext = isolate(input[["ext"]]),
       pattern = isolate(input[["pattern"]]),
       depth = isolate(input[["depth"]]),
+      maxCount = isolate(maxCount()),
       wholeWord = isolate(input[["wholeWord"]]),
       ignoreCase = isolate(input[["ignoreCase"]])
     )
+    if(attr(fifWidget, "maxCountReached")) {
+      show_toast(
+        title = "Reached maximum",
+        text = "Maximum number of results has been reached.",
+        type = "warning",
+        timer = 5000,
+        position = "top-end"
+      )
+    }
+    fifWidget
   })
 
 })
