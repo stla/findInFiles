@@ -1,8 +1,8 @@
 ## Test environments
 
-* Windows 10, R 4.1.2
-* Ubuntu 20, via Github action
-* win-builder (devel)
+* Windows 10, R 4.3.2
+* Github actions
+* win-builder devel
 
 ## R CMD check results
 
