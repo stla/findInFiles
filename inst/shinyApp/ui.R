@@ -22,23 +22,20 @@ shinyUI(fluidPage(
         )
       ),
       br(),
-      textInput(
+      smallInput(textInput(
         "ext", "Extension:",
         value = "R"
-      ),
+      )),
       textInput(
         "pattern", "Pattern:"
       ),
-      numericInput(
+      smallInput(numericInput(
         "depth", "Depth; set -1 for unlimited:",
         value = 1, min = -1, step = 1
-      ),
-      wellPanel(
-        style = "border-color: #e4c4c4",
-        actionButton(
-          "run", "Find",
-          class = "btn-danger btn-block"
-        )
+      )),
+      actionButton(
+        "run", "Find",
+        class = "btn-danger btn-block"
       ),
       fluidRow(
         column(
@@ -54,10 +51,10 @@ shinyUI(fluidPage(
           )
         )
       ),
-      numericInput(
-        "maxCount", "Max number of results; set 0 for unlimited:",
+      smallInput(numericInput(
+        "maxCount", "Maximal number of results; set 0 for unlimited:",
         value = 100, min = 0, step = 50
-      )
+      ))
     ),
     mainPanel(
       width = 9,

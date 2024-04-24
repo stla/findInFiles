@@ -218,17 +218,17 @@ shinyServer(function(input, output, session){
   output[["results"]] <- renderFIF({
     req(Run())
     fifWidget <- findInFiles(
-      ext = isolate(input[["ext"]]),
-      pattern = isolate(input[["pattern"]]),
-      depth = isolate(input[["depth"]]),
-      maxCount = isolate(maxCount()),
-      wholeWord = isolate(input[["wholeWord"]]),
+      ext        = isolate(input[["ext"]]),
+      pattern    = isolate(input[["pattern"]]),
+      depth      = isolate(input[["depth"]]),
+      maxCount   = isolate(maxCount()),
+      wholeWord  = isolate(input[["wholeWord"]]),
       ignoreCase = isolate(input[["ignoreCase"]])
     )
-    if(attr(fifWidget, "maxCountReached")) {
+    if(attr(fifWidget, "maxCountExceeded")) {
       show_toast(
         title = "Reached maximum",
-        text = "Maximum number of results has been reached.",
+        text = "Maximum number of results has been exceeded.",
         type = "warning",
         timer = 5000,
         position = "top-end"

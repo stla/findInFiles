@@ -8,6 +8,7 @@ findInFiles(
   ext,
   pattern,
   depth = NULL,
+  maxCountPerFile = NULL,
   maxCount = NULL,
   wholeWord = FALSE,
   ignoreCase = FALSE,
@@ -30,8 +31,13 @@ etc.), otherwise a positive integer: \code{0} to search in the root
 directory only, \code{1} to search in the root directory and its
 subdirectories, etc.}
 
-\item{maxCount}{maximal number of results, \code{NULL} for an unlimited
-number, otherwise a positive integer}
+\item{maxCountPerFile}{maximum number of results per file, \code{NULL} for
+an unlimited number, otherwise a positive integer}
+
+\item{maxCount}{maximum number of results, \code{NULL} for an unlimited
+number, otherwise a positive integer; supplying an integer does not
+limit the number of results returned by \code{grep}, it just truncates
+the output}
 
 \item{wholeWord}{logical, whether to match the whole pattern}
 

@@ -8,7 +8,7 @@ getFiles <- function(ext, depth){
 }
 
 grepInFiles <- function(
-  ext, pattern, depth, maxCount,
+  ext, pattern, depth, maxCountPerFile, maxCount,
   wholeWord, ignoreCase, perl,
   excludePattern, excludeFoldersPattern,
   directory, output
@@ -34,9 +34,12 @@ grepInFiles <- function(
   }else{
     opts <- c("--colour=always", "-n", "--with-filename")
   }
+  if(!is.null(maxCountPerFile)) {
+    stopifnot(isPositiveInteger(maxCountPerFile))
+    opts <- c(opts, sprintf("-m %d", maxCountPerFile))
+  }
   if(!is.null(maxCount)) {
     stopifnot(isPositiveInteger(maxCount))
-    opts <- c(opts, sprintf("-m %d", maxCount))
   }
   if(wholeWord) opts <- c(opts, "-w")
   if(ignoreCase) opts <- c(opts, "-i")
@@ -93,8 +96,22 @@ grepInFiles <- function(
   } else {
     message(sprintf("%d results.", nresults))
   }
-  if(!is.null(maxCount) && maxCount == nresults) {
-    message("Reached maximal number of results.")
+  if(!is.null(maxCount)) {
+    results <- head(results, maxCount)
+    if(maxCount < nresults) {
+      attr(results, "maxCountExceeded") <- TRUE
+      if(maxCount == 1L) {
+        message(
+          "Returning only one result ",
+          "(reached supplied maximum number of results)."
+        )
+      } else {
+        message(
+          sprintf("Returning only %d results ", maxCount),
+          "(reached supplied maximum number of results)."
+        )
+      }
+    }
   }
   attr(results, "options") <- list(
     "pattern"    = pattern,

@@ -6,6 +6,12 @@ library(shinyjqui)
 library(shinyFiles)
 library(shinyvalidate)
 library(fs)
+library(htmltools)
 
 roots <- c(wd = getOption("FIFWD"), getVolumes()())
+
+smallInput <- function(Input) {
+  tagQ <- tagQuery(Input)
+  tagQ$find("input")$addClass("input-sm form-control-sm")$allTags()
+}
 

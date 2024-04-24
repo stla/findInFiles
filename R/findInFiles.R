@@ -9,8 +9,12 @@
 #'   etc.), otherwise a positive integer: \code{0} to search in the root
 #'   directory only, \code{1} to search in the root directory and its
 #'   subdirectories, etc.
-#' @param maxCount maximal number of results, \code{NULL} for an unlimited
-#'   number, otherwise a positive integer
+#' @param maxCountPerFile maximum number of results per file, \code{NULL} for
+#'   an unlimited number, otherwise a positive integer
+#' @param maxCount maximum number of results, \code{NULL} for an unlimited
+#'   number, otherwise a positive integer; supplying an integer does not
+#'   limit the number of results returned by \code{grep}, it just truncates
+#'   the output
 #' @param wholeWord logical, whether to match the whole pattern
 #' @param ignoreCase logical, whether to ignore the case
 #' @param perl logical, whether \code{pattern} is a Perl regular expression
@@ -45,7 +49,7 @@
 #' folder <- system.file("www", "shared", package = "shiny")
 #' findInFiles("css", "outline", excludePattern = "*.min.css", root = folder)
 findInFiles <- function(
-  ext, pattern, depth = NULL, maxCount = NULL,
+  ext, pattern, depth = NULL, maxCountPerFile = NULL, maxCount = NULL,
   wholeWord = FALSE, ignoreCase = FALSE, perl = FALSE,
   excludePattern = NULL, excludeFoldersPattern = NULL,
   root = ".", output = "viewer"
@@ -86,7 +90,8 @@ findInFiles <- function(
   )
 
   results <- grepInFiles(
-    ext = ext, pattern = pattern, depth = depth, maxCount = maxCount,
+    ext = ext, pattern = pattern, depth = depth,
+    maxCountPerFile = maxCountPerFile, maxCount = maxCount,
     wholeWord = wholeWord, ignoreCase = ignoreCase, perl = perl,
     excludePattern = excludePattern,
     excludeFoldersPattern = excludeFoldersPattern,
@@ -116,7 +121,7 @@ findInFiles <- function(
     }
   }
 
-  maxCountReached <- isTRUE(length(results) == maxCount)
+  maxCountExceeded <- isTRUE(attr(results, "maxCountExceeded"))
 
   if(is.null(results)){
     ansi <- "No result."
@@ -145,7 +150,7 @@ findInFiles <- function(
     package = "findInFiles",
     elementId = NULL
   )
-  attr(widget, "maxCountReached") <- maxCountReached
+  attr(widget, "maxCountExceeded") <- maxCountExceeded
   widget
 
 }
