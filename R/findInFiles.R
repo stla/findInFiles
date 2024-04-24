@@ -61,7 +61,10 @@
 #' fif
 #'
 #' folder <- system.file("www", "shared", package = "shiny")
-#' findInFiles("css", "outline", excludePattern = "*.min.css", root = folder)
+#' findInFiles(
+#'   "css", "color", root = folder,
+#'   excludePattern = c("*.min.css", "selectize*", "shiny*")
+#' )
 findInFiles <- function(
   ext, pattern, depth = NULL, maxCountPerFile = NULL, maxCount = NULL,
   wholeWord = FALSE, ignoreCase = FALSE, perl = FALSE,
@@ -248,4 +251,3 @@ FIF2dataframe <- function(fif){
   tbl[["code"]] <- vec_data(strip_style(tbl[["code"]]))
   as.data.frame(tbl)
 }
-

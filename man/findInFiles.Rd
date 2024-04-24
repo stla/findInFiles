@@ -110,5 +110,8 @@ FIF2dataframe(fif)
 fif
 
 folder <- system.file("www", "shared", package = "shiny")
-findInFiles("css", "outline", excludePattern = "*.min.css", root = folder)
+findInFiles(
+  "css", "color", root = folder,
+  excludePattern = c("*.min.css", "selectize*", "shiny*")
+)
 }
