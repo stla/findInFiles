@@ -1,8 +1,11 @@
 getFiles <- function(extensions, depth){
   stopifnot(isPositiveInteger(depth))
+  extensions <- do.call(c, lapply(extensions, function(ext) {
+    paste0(c(".", "*."), ext)
+  }))
   wildcards <- do.call(c, lapply(extensions, function(ext) {
     Reduce(
-      file.path, x = rep("*", depth), init = paste0("*.", ext),
+      file.path, x = rep("*", depth), init = ext,
       right = TRUE, accumulate = TRUE
     )
   }))
@@ -99,7 +102,9 @@ grepInFiles <- function(
     suppressWarnings(system2(
       command,
       args = c(
-        paste0("--include=\\*\\.", ext), opts, "-r", "-e", shQuote(pattern)
+        paste0("--include=\\*\\.", ext),
+        paste0("--exclude-dir=", shQuote(".*")),
+        opts, "-r", "-e", shQuote(pattern)
       ),
       stdout = TRUE, stderr = TRUE
     ))

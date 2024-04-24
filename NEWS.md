@@ -1,5 +1,12 @@
 # findInFiles 0.5.0
 
+* Files without base name (such as `.gitignore`) were excluded from the search. 
+This is no longer the case.
+
+* Hidden folders were not excluded from the search when running a recursive 
+search (i.e. `depth` is `NULL` or a negative integer). Now they are always 
+excluded.
+
 * The argument `ext` of the `findInFiles` function has been renamed to 
 `extensions` and it can be a vector of file extensions now.
 
