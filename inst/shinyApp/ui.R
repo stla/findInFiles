@@ -30,8 +30,8 @@ shinyUI(fluidPage(
         "pattern", "Pattern:"
       ),
       smallInput(numericInput(
-        "depth", "Depth; set -1 for unlimited:",
-        value = 1, min = -1, step = 1
+        "depth", "Depth; blank for unlimited:",
+        value = 1, min = 0, step = 1
       )),
       actionButton(
         "run", "Find",
@@ -52,8 +52,8 @@ shinyUI(fluidPage(
         )
       ),
       smallInput(numericInput(
-        "maxCount", "Maximal number of results; set 0 for unlimited:",
-        value = 100, min = 0, step = 50
+        "maxCount", "Maximal number of results; blank for unlimited:",
+        value = 100, min = 1, step = 50
       ))
     ),
     mainPanel(

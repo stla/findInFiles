@@ -6,8 +6,8 @@ shinyServer(function(input, output, session){
     sv_regex("^[a-zA-Z0-9\\+]+$", "Only alphanumeric or 'c++'")
   )
   iv$add_rule("pattern", sv_required())
-  iv$add_rule("depth", sv_integer())
-  iv$add_rule("maxCount", sv_integer())
+  iv$add_rule("depth", isPositiveIntegerOrNA)
+  iv$add_rule("maxCount", isPositiveIntegerOrNA)
   iv$enable()
 
   shinyDirChoose(
@@ -46,12 +46,17 @@ shinyServer(function(input, output, session){
   Tabsets <- reactiveVal(character(0L))
   Editors <- reactiveVal(character(0L))
 
-  negativeDepth <- reactive({
-    req(input[["depth"]] %% 1 == 0)
-    if(input[["depth"]] < 0) TRUE
+  Depth <- reactive({
+    if(!is.na(input[["depth"]])) {
+      input[["depth"]]
+    }
   })
 
-  observeEvent(negativeDepth(), {
+  infiniteDepth <- reactive({
+    if(is.na(input[["depth"]])) TRUE
+  })
+
+  observeEvent(infiniteDepth(), {
     show_toast(
       title = "Unlimited depth",
       text = "Be sure that the current folder is not too deep",
@@ -220,7 +225,7 @@ shinyServer(function(input, output, session){
     fifWidget <- findInFiles(
       ext        = isolate(input[["ext"]]),
       pattern    = isolate(input[["pattern"]]),
-      depth      = isolate(input[["depth"]]),
+      depth      = isolate(Depth()),
       maxCount   = isolate(maxCount()),
       wholeWord  = isolate(input[["wholeWord"]]),
       ignoreCase = isolate(input[["ignoreCase"]])
