@@ -23,18 +23,21 @@ shinyUI(fluidPage(
       ),
       br(),
       smallInput(textInput(
-        "ext", "Extension:",
+        "ext", "File extension:",
         value = "R"
       )),
       textInput(
-        "pattern", "Pattern:"
+        "pattern", "Pattern to search:"
       ),
       smallInput(numericInput(
         "depth", "Depth; blank for unlimited:",
         value = 1, min = 0, step = 1
       )),
       actionButton(
-        "run", "Find",
+        "run",
+        tags$span(
+          "Find in files", class = "mylabel"
+        ),
         class = "btn-danger btn-block"
       ),
       fluidRow(
@@ -52,7 +55,7 @@ shinyUI(fluidPage(
         )
       ),
       smallInput(numericInput(
-        "maxCount", "Maximal number of results; blank for unlimited:",
+        "maxCount", "Maximum number of results; blank for unlimited:",
         value = 100, min = 1, step = 50
       ))
     ),

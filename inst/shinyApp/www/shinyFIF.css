@@ -3,6 +3,16 @@ a.list-group-item > h4 {
   word-break: break-all;
 }
 
+.mylabel {
+  font-style: italic;
+  font-weight: bold;
+}
+
+#run {
+  border-width: 2px;
+  border-color: darkred;
+}
+
 #wd {
   font-size: 12px;
   font-weight: bold;

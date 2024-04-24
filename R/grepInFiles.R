@@ -103,12 +103,12 @@ grepInFiles <- function(
       if(maxCount == 1L) {
         message(
           "Returning only one result ",
-          "(reached supplied maximum number of results)."
+          "(reached the supplied maximum number of results)."
         )
       } else {
         message(
           sprintf("Returning only %d results ", maxCount),
-          "(reached supplied maximum number of results)."
+          "(reached the supplied maximum number of results)."
         )
       }
     }
