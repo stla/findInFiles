@@ -47,12 +47,28 @@ grepInFiles <- function(
   if(ignoreCase) opts <- c(opts, "-i")
   if(perl) opts <- c(opts, "-P")
   if(!is.null(excludePattern)){
-    stopifnot(isString(excludePattern))
-    opts <- c(opts, paste0("--exclude=", shQuote(excludePattern)))
-  } #TODO: multiple patterns - https://stackoverflow.com/questions/41702134/grep-exclude-from-how-to-include-multiple-files
+    check <- all(vapply(excludePattern, isString, logical(1L)))
+    if(!check) {
+      stop("Invalid argument `excludePattern`.")
+    }
+    opts <- c(
+      opts,
+      vapply(excludePattern, function(pattern) {
+        paste0("--exclude=", shQuote(pattern))
+      }, character(1L))
+    )
+  }
   if(!is.null(excludeFoldersPattern)){
-    stopifnot(isString(excludeFoldersPattern))
-    opts <- c(opts, paste0("--exclude-dir=", shQuote(excludeFoldersPattern)))
+    check <- all(vapply(excludeFoldersPattern, isString, logical(1L)))
+    if(!check) {
+      stop("Invalid argument `excludeFoldersPattern`.")
+    }
+    opts <- c(
+      opts,
+      vapply(excludeFoldersPattern, function(pattern) {
+        paste0("--exclude-dir=", shQuote(pattern))
+      }, character(1L))
+    )
   }
   # return(system2(
   #   "grep",

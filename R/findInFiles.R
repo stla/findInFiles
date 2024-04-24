@@ -25,10 +25,12 @@
 #' @param wholeWord logical, whether to match the whole pattern
 #' @param ignoreCase logical, whether to ignore the case
 #' @param perl logical, whether \code{pattern} is a Perl regular expression
-#' @param excludePattern a pattern; exclude from search the files and folders
-#'   which match this pattern
-#' @param excludeFoldersPattern a pattern; exclude from search the folders
-#'   which match this pattern
+#' @param excludePattern a pattern or a vector of patterns; files and folders
+#'   whose name matches this pattern or one of these patterns will be excluded
+#'   from search
+#' @param excludeFoldersPattern a pattern or a vector of patterns; folders
+#'   whose name matches this pattern or one of these patterns will be excluded
+#'   from search
 #' @param root path to the root directory to search from
 #' @param output one of \code{"viewer"}, \code{"tibble"} or
 #'   \code{"viewer+tibble"}; see examples

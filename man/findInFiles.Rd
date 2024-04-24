@@ -66,11 +66,13 @@ are found (so there is no gain of efficiency)}
 
 \item{perl}{logical, whether \code{pattern} is a Perl regular expression}
 
-\item{excludePattern}{a pattern; exclude from search the files and folders
-which match this pattern}
+\item{excludePattern}{a pattern or a vector of patterns; files and folders
+whose name matches this pattern or one of these patterns will be excluded
+from search}
 
-\item{excludeFoldersPattern}{a pattern; exclude from search the folders
-which match this pattern}
+\item{excludeFoldersPattern}{a pattern or a vector of patterns; folders
+whose name matches this pattern or one of these patterns will be excluded
+from search}
 
 \item{root}{path to the root directory to search from}
 
