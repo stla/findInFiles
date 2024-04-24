@@ -224,13 +224,17 @@ shinyServer(function(input, output, session){
     req(Run())
     extensions <- strsplit(isolate(input[["ext"]]), ",", fixed = TRUE)[[1L]]
     extensions <- Filter(function(x) nchar(x) > 0L, extensions)
+    patternType <- isolate(input[["patternType"]])
     fifWidget <- findInFiles(
       extensions = extensions,
       pattern    = isolate(input[["pattern"]]),
       depth      = isolate(Depth()),
       maxCount   = isolate(maxCount()),
       wholeWord  = isolate(input[["wholeWord"]]),
-      ignoreCase = isolate(input[["ignoreCase"]])
+      ignoreCase = isolate(input[["ignoreCase"]]),
+      extended   = patternType == "extended",
+      fixed      = patternType == "fixed",
+      perl       = patternType == "perl"
     )
     if(attr(fifWidget, "maxCountExceeded")) {
       show_toast(

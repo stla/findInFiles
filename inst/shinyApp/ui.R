@@ -40,19 +40,31 @@ shinyUI(fluidPage(
         ),
         class = "btn-danger btn-block"
       ),
-      fluidRow(
-        column(
-          6,
+      br(),
+      dropMenu(
+        actionButton(
+          "menu", "Pattern options", class = "btn-success btn-block btn-sm"
+        ),
+        splitLayout(
           checkboxInput(
             "wholeWord", "Whole word"
-          )
-        ),
-        column(
-          6,
+          ),
           checkboxInput(
             "ignoreCase", "Ignore case"
           )
-        )
+        ),
+        awesomeRadio(
+          "patternType",
+          "Pattern type",
+          choices = list(
+            "Basic regular expression" = "basic",
+            "Fixed strings" = "fixed",
+            "Extended regular expression" = "extended",
+            "Perl regular expression" = "perl"
+          )
+        ),
+        placement = "top",
+        maxWidth = "600px"
       ),
       smallInput(numericInput(
         "maxCount", "Maximum number of results; blank for unlimited:",

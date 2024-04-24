@@ -13,6 +13,11 @@ a.list-group-item > h4 {
   border-color: darkred;
 }
 
+#menu {
+  border-width: 2px;
+  border-color: darkgreen;
+}
+
 #wd {
   font-size: 12px;
   font-weight: bold;
