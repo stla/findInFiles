@@ -19,6 +19,7 @@
 #' @param root path to the root directory to search from
 #' @param output one of \code{"viewer"}, \code{"tibble"} or
 #'   \code{"viewer+tibble"}; see examples
+#' @param maxResultsToRender limit results to render in a viewer mode, to prevent shinyApp from crashing
 #'
 #' @return A tibble if \code{output="tibble"}, otherwise a
 #'   \code{htmlwidget} object.
@@ -46,7 +47,7 @@ findInFiles <- function(
   ext, pattern, depth = NULL,
   wholeWord = FALSE, ignoreCase = FALSE, perl = FALSE,
   excludePattern = NULL, excludeFoldersPattern = NULL,
-  root = ".", output = "viewer"
+  root = ".", output = "viewer",maxResultsToRender=500
 ){
 
   if(inSolaris() && Sys.which("ggrep") == ""){
@@ -116,6 +117,8 @@ findInFiles <- function(
 
   if(is.null(results)){
     ansi <- "No results."
+  }else if(length(results)>maxResultsToRender && output %in% c("viewer", "viewer+tibble")){
+    ansi <- "Too many resulsts to render, please try to search for a more precise pattern or search in a smaller directory."
   }else{
     ansi <- paste0(results, collapse = "\n")
   }
