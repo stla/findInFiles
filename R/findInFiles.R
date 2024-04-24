@@ -1,5 +1,10 @@
-#' Find pattern in files
-#' @description Find a pattern in some files.
+#' @title Find pattern in files
+#' @description Find a pattern in some files. The functions \code{findInFiles}
+#'   and \code{fif} are the same, and \code{fifR(...)} is the same as
+#'   \code{findInFiles(ext = "R", ...)}.
+#'
+#' @name findInFiles
+#' @rdname findInFiles
 #'
 #' @param ext file extension, e.g. \code{"R"} or \code{"js"}
 #' @param pattern pattern to search for, a regular expression, e.g.
@@ -10,11 +15,13 @@
 #'   directory only, \code{1} to search in the root directory and its
 #'   subdirectories, etc.
 #' @param maxCountPerFile maximum number of results per file, \code{NULL} for
-#'   an unlimited number, otherwise a positive integer
+#'   an unlimited number, otherwise a positive integer; when an integer
+#'   \code{m} is supplied, \code{grep} stops to search in each file after it
+#'   finds \code{m} results
 #' @param maxCount maximum number of results, \code{NULL} for an unlimited
-#'   number, otherwise a positive integer; supplying an integer does not
-#'   limit the number of results returned by \code{grep}, it just truncates
-#'   the output
+#'   number, otherwise a positive integer; supplying an integer \code{m} just
+#'   truncates the output, it does not stop \code{grep} after \code{m} results
+#'   are found (so there is no gain of efficiency)
 #' @param wholeWord logical, whether to match the whole pattern
 #' @param ignoreCase logical, whether to ignore the case
 #' @param perl logical, whether \code{pattern} is a Perl regular expression
@@ -25,6 +32,7 @@
 #' @param root path to the root directory to search from
 #' @param output one of \code{"viewer"}, \code{"tibble"} or
 #'   \code{"viewer+tibble"}; see examples
+#' @param ... arguments other than \code{ext} passed to \code{findInFiles}
 #'
 #' @return A tibble if \code{output="tibble"}, otherwise a
 #'   \code{htmlwidget} object.
@@ -155,6 +163,16 @@ findInFiles <- function(
   attr(widget, "numberOfResults")  <- numberOfResults
   widget
 
+}
+
+#' @rdname findInFiles
+#' @export
+fif <- findInFiles
+
+#' @rdname findInFiles
+#' @export
+fifR <- function(...) {
+  findInFiles(ext = "R", ...)
 }
 
 #' @title Output of `findInFiles` as a tibble

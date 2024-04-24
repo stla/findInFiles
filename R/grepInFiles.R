@@ -7,6 +7,8 @@ getFiles <- function(ext, depth){
   Sys.glob(wildcards)
 }
 
+#' @importFrom utils head
+#' @noRd
 grepInFiles <- function(
   ext, pattern, depth, maxCountPerFile, maxCount,
   wholeWord, ignoreCase, perl,
