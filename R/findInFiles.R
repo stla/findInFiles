@@ -122,6 +122,7 @@ findInFiles <- function(
   }
 
   maxCountExceeded <- isTRUE(attr(results, "maxCountExceeded"))
+  numberOfResults <- attr(results, "numberOfResults")
 
   if(is.null(results)){
     ansi <- "No result."
@@ -151,6 +152,7 @@ findInFiles <- function(
     elementId = NULL
   )
   attr(widget, "maxCountExceeded") <- maxCountExceeded
+  attr(widget, "numberOfResults")  <- numberOfResults
   widget
 
 }

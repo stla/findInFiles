@@ -113,6 +113,7 @@ grepInFiles <- function(
       }
     }
   }
+  attr(results, "numberOfResults") <- nresults
   attr(results, "options") <- list(
     "pattern"    = pattern,
     "wholeWord"  = wholeWord,

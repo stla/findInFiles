@@ -228,9 +228,14 @@ shinyServer(function(input, output, session){
     if(attr(fifWidget, "maxCountExceeded")) {
       show_toast(
         title = "Reached maximum",
-        text = "Maximum number of results has been exceeded.",
+        text = paste0(
+          "Maximum number of results has been exceeded ",
+          sprintf(
+            "(there are %d results).", attr(fifWidget, "numberOfResults")
+          )
+        ),
         type = "warning",
-        timer = 5000,
+        timer = 7000,
         position = "top-end"
       )
     }
