@@ -6,8 +6,9 @@
 #' @name findInFiles
 #' @rdname findInFiles
 #'
-#' @param extensions extension(s) of the files to include in the search,
-#'   e.g. \code{"R"} or \code{"js"} or \code{c("R", "Rmd")}
+#' @param extensions extension(s) of the files to include in the search
+#'   (case-sensitive), e.g. \code{"R"} or \code{c("R", "Rmd")}, or \code{"*"}
+#'   to search in all files
 #' @param pattern pattern to search for, a regular expression, e.g.
 #'   \code{"function"} or \code{"^function"}
 #' @param depth depth of the search, \code{NULL} or a negative number for an
@@ -25,7 +26,9 @@
 #'   are found (so there is no gain of efficiency)
 #' @param wholeWord logical, whether to match the whole pattern
 #' @param ignoreCase logical, whether to ignore the case
-#' @param perl logical, whether \code{pattern} is a Perl regular expression
+#' @param perl logical, whether the pattern given in the \code{pattern}
+#'   argument is a Perl regular expression; useful to search for multiple
+#'   patterns: set \code{perl=TRUE} and \code{pattern="(pattern1|pattern2|...)"}
 #' @param includePattern this argument is ignored if \code{depth} is not a
 #'   positive integer; it must be a pattern or a vector of patterns, and only
 #'   the files whose name matches this pattern or one of these patterns will be
@@ -36,10 +39,13 @@
 #' @param excludeFoldersPattern a pattern or a vector of patterns; folders
 #'   whose name matches this pattern or one of these patterns will be excluded
 #'   from search
+#' @param moreOptions additional options passed to the \code{grep} command,
+#'   for \code{grep} experts
 #' @param root path to the root directory to search from
 #' @param output one of \code{"viewer"}, \code{"tibble"} or
 #'   \code{"viewer+tibble"}; see examples
-#' @param ... arguments other than \code{ext} passed to \code{findInFiles}
+#' @param ... arguments other than \code{extensions} passed to
+#'   \code{findInFiles}
 #'
 #' @return A tibble if \code{output="tibble"}, otherwise a
 #'   \code{htmlwidget} object.
@@ -71,6 +77,7 @@ findInFiles <- function(
   wholeWord = FALSE, ignoreCase = FALSE, perl = FALSE,
   includePattern = NULL,
   excludePattern = NULL, excludeFoldersPattern = NULL,
+  moreOptions = NULL,
   root = ".", output = "viewer"
 ){
 
@@ -115,6 +122,7 @@ findInFiles <- function(
     includePattern = includePattern,
     excludePattern = excludePattern,
     excludeFoldersPattern = excludeFoldersPattern,
+    moreOptions = moreOptions,
     directory = root, output = output
   )
 

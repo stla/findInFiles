@@ -18,6 +18,7 @@ grepInFiles <- function(
     ext, pattern, depth, maxCountPerFile, maxCount,
     wholeWord, ignoreCase, perl,
     includePattern, excludePattern, excludeFoldersPattern,
+    moreOptions,
     directory, output
 ){
   if(inSolaris()){
@@ -39,10 +40,11 @@ grepInFiles <- function(
   stopifnot(isBoolean(perl))
   wd <- setwd(directory)
   on.exit(setwd(wd))
+  opts <- c("-n", "-I", "--with-filename", moreOptions)
   if(output == "tibble"){
-    opts <- c("--colour=never", "-n", "--with-filename")
+    opts <- c(opts, "--colour=never")
   }else{
-    opts <- c("--colour=always", "-n", "--with-filename")
+    opts <- c(opts, "--colour=always")
   }
   if(!is.null(maxCountPerFile)) {
     stopifnot(isPositiveInteger(maxCountPerFile))
@@ -78,32 +80,23 @@ grepInFiles <- function(
       }, character(1L))
     )
   }
-  if(!is.null(excludeFoldersPattern)){
-    check <- all(vapply(excludeFoldersPattern, isString, logical(1L)))
-    if(!check) {
-      stop("Invalid argument `excludeFoldersPattern`.")
-    }
-    opts <- c(
-      opts,
-      vapply(excludeFoldersPattern, function(pattern) {
-        paste0("--exclude-dir=", shQuote(pattern))
-      }, character(1L))
-    )
+  excludeFoldersPattern <- c(".*", excludeFoldersPattern) # skip hidden folders
+  check <- all(vapply(excludeFoldersPattern, isString, logical(1L)))
+  if(!check) {
+    stop("Invalid argument `excludeFoldersPattern`.")
   }
-  # return(system2(
-  #   "grep",
-  #   args = c(
-  #     paste0("--include=\\*\\.", ext), opts, "-r", "-e", shQuote(pattern)
-  #   ),
-  #   stdout = TRUE, stderr = TRUE
-  # ))
+  opts <- c(
+    opts,
+    vapply(excludeFoldersPattern, function(pattern) {
+      paste0("--exclude-dir=", shQuote(pattern))
+    }, character(1L))
+  )
   command <- ifelse(inSolaris(), "ggrep", "grep")
   results <- if(is.null(depth) || depth < 0){
     suppressWarnings(system2(
       command,
       args = c(
         paste0("--include=\\*\\.", ext),
-        paste0("--exclude-dir=", shQuote(".*")),
         opts, "-r", "-e", shQuote(pattern)
       ),
       stdout = TRUE, stderr = TRUE

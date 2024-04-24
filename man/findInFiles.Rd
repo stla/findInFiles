@@ -18,6 +18,7 @@ findInFiles(
   includePattern = NULL,
   excludePattern = NULL,
   excludeFoldersPattern = NULL,
+  moreOptions = NULL,
   root = ".",
   output = "viewer"
 )
@@ -34,6 +35,7 @@ fif(
   includePattern = NULL,
   excludePattern = NULL,
   excludeFoldersPattern = NULL,
+  moreOptions = NULL,
   root = ".",
   output = "viewer"
 )
@@ -41,8 +43,9 @@ fif(
 fifR(...)
 }
 \arguments{
-\item{extensions}{extension(s) of the files to include in the search,
-e.g. \code{"R"} or \code{"js"} or \code{c("R", "Rmd")}}
+\item{extensions}{extension(s) of the files to include in the search
+(case-sensitive), e.g. \code{"R"} or \code{c("R", "Rmd")}, or \code{"*"}
+to search in all files}
 
 \item{pattern}{pattern to search for, a regular expression, e.g.
 \code{"function"} or \code{"^function"}}
@@ -67,7 +70,9 @@ are found (so there is no gain of efficiency)}
 
 \item{ignoreCase}{logical, whether to ignore the case}
 
-\item{perl}{logical, whether \code{pattern} is a Perl regular expression}
+\item{perl}{logical, whether the pattern given in the \code{pattern}
+argument is a Perl regular expression; useful to search for multiple
+patterns: set \code{perl=TRUE} and \code{pattern="(pattern1|pattern2|...)"}}
 
 \item{includePattern}{this argument is ignored if \code{depth} is not a
 positive integer; it must be a pattern or a vector of patterns, and only
@@ -82,12 +87,16 @@ from search}
 whose name matches this pattern or one of these patterns will be excluded
 from search}
 
+\item{moreOptions}{additional options passed to the \code{grep} command,
+for \code{grep} experts}
+
 \item{root}{path to the root directory to search from}
 
 \item{output}{one of \code{"viewer"}, \code{"tibble"} or
 \code{"viewer+tibble"}; see examples}
 
-\item{...}{arguments other than \code{ext} passed to \code{findInFiles}}
+\item{...}{arguments other than \code{extensions} passed to
+\code{findInFiles}}
 }
 \value{
 A tibble if \code{output="tibble"}, otherwise a
