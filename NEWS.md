@@ -1,5 +1,12 @@
 # findInFiles 0.5.0
 
+* The arguments `excludePattern` and `excludeFoldersPattern` of the 
+`findInFiles` function can be some vectors now, to give multiple patterns.
+
+* The `findInFiles` function has now an argument `includePattern`. If a vector 
+of patterns is supplied to this argument, then only the files whose name matches
+one of these patterns are included in the search.
+
 * The `findInFiles` function has two new arguments `maxCountPerFile` and
 `maxCount`. If an integer is supplied to `maxCountPerFile`, then this integer 
 is passed to the `--max-count` option of the `grep` command and then `grep` 

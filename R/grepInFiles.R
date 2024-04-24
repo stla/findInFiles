@@ -12,7 +12,7 @@ getFiles <- function(ext, depth){
 grepInFiles <- function(
   ext, pattern, depth, maxCountPerFile, maxCount,
   wholeWord, ignoreCase, perl,
-  excludePattern, excludeFoldersPattern,
+  includePattern, excludePattern, excludeFoldersPattern,
   directory, output
 ){
   if(inSolaris()){
@@ -46,6 +46,18 @@ grepInFiles <- function(
   if(wholeWord) opts <- c(opts, "-w")
   if(ignoreCase) opts <- c(opts, "-i")
   if(perl) opts <- c(opts, "-P")
+  if(!is.null(includePattern)){
+    check <- all(vapply(includePattern, isString, logical(1L)))
+    if(!check) {
+      stop("Invalid argument `includePattern`.")
+    }
+    opts <- c(
+      opts,
+      vapply(includePattern, function(pattern) {
+        paste0("--include=", shQuote(pattern))
+      }, character(1L))
+    )
+  }
   if(!is.null(excludePattern)){
     check <- all(vapply(excludePattern, isString, logical(1L)))
     if(!check) {

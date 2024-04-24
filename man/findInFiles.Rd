@@ -15,6 +15,7 @@ findInFiles(
   wholeWord = FALSE,
   ignoreCase = FALSE,
   perl = FALSE,
+  includePattern = NULL,
   excludePattern = NULL,
   excludeFoldersPattern = NULL,
   root = ".",
@@ -30,6 +31,7 @@ fif(
   wholeWord = FALSE,
   ignoreCase = FALSE,
   perl = FALSE,
+  includePattern = NULL,
   excludePattern = NULL,
   excludeFoldersPattern = NULL,
   root = ".",
@@ -65,6 +67,11 @@ are found (so there is no gain of efficiency)}
 \item{ignoreCase}{logical, whether to ignore the case}
 
 \item{perl}{logical, whether \code{pattern} is a Perl regular expression}
+
+\item{includePattern}{this argument is ignored if \code{depth} is not a
+positive integer; it must be a pattern or a vector of patterns, and only
+the files whose name matches this pattern or one of these patterns will be
+included in the search}
 
 \item{excludePattern}{a pattern or a vector of patterns; files and folders
 whose name matches this pattern or one of these patterns will be excluded

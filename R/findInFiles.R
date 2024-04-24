@@ -25,6 +25,10 @@
 #' @param wholeWord logical, whether to match the whole pattern
 #' @param ignoreCase logical, whether to ignore the case
 #' @param perl logical, whether \code{pattern} is a Perl regular expression
+#' @param includePattern this argument is ignored if \code{depth} is not a
+#'   positive integer; it must be a pattern or a vector of patterns, and only
+#'   the files whose name matches this pattern or one of these patterns will be
+#'   included in the search
 #' @param excludePattern a pattern or a vector of patterns; files and folders
 #'   whose name matches this pattern or one of these patterns will be excluded
 #'   from search
@@ -61,6 +65,7 @@
 findInFiles <- function(
   ext, pattern, depth = NULL, maxCountPerFile = NULL, maxCount = NULL,
   wholeWord = FALSE, ignoreCase = FALSE, perl = FALSE,
+  includePattern = NULL,
   excludePattern = NULL, excludeFoldersPattern = NULL,
   root = ".", output = "viewer"
 ){
@@ -103,6 +108,7 @@ findInFiles <- function(
     ext = ext, pattern = pattern, depth = depth,
     maxCountPerFile = maxCountPerFile, maxCount = maxCount,
     wholeWord = wholeWord, ignoreCase = ignoreCase, perl = perl,
+    includePattern = includePattern,
     excludePattern = excludePattern,
     excludeFoldersPattern = excludeFoldersPattern,
     directory = root, output = output
