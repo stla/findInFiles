@@ -38,7 +38,7 @@ shinyServer(function(input, output, session){
   Editors <- reactiveVal(character(0L))
 
   negativeDepth <- reactive({
-    if(input[["depth"]] < 0) TRUE
+    if(isolate(input[["depth"]]) < 0) TRUE
   })
 
   observeEvent(negativeDepth(), {
