@@ -16,7 +16,7 @@ getFiles <- function(extensions, depth){
 #' @noRd
 grepInFiles <- function(
     ext, pattern, depth, maxCountPerFile, maxCount,
-    wholeWord, ignoreCase, perl,
+    wholeWord, ignoreCase, extended, fixed, perl,
     includePattern, excludePattern, excludeFoldersPattern,
     moreOptions,
     directory, output
@@ -55,6 +55,8 @@ grepInFiles <- function(
   }
   if(wholeWord) opts <- c(opts, "-w")
   if(ignoreCase) opts <- c(opts, "-i")
+  if(extended) opts <- c(opts, "-E")
+  if(fixed) opts <- c(opts, "-F")
   if(perl) opts <- c(opts, "-P")
   if(!is.null(includePattern)){
     check <- all(vapply(includePattern, isString, logical(1L)))

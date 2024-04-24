@@ -14,6 +14,8 @@ findInFiles(
   maxCount = NULL,
   wholeWord = FALSE,
   ignoreCase = FALSE,
+  extended = FALSE,
+  fixed = FALSE,
   perl = FALSE,
   includePattern = NULL,
   excludePattern = NULL,
@@ -31,6 +33,8 @@ fif(
   maxCount = NULL,
   wholeWord = FALSE,
   ignoreCase = FALSE,
+  extended = FALSE,
+  fixed = FALSE,
   perl = FALSE,
   includePattern = NULL,
   excludePattern = NULL,
@@ -48,7 +52,11 @@ fifR(...)
 to search in all files}
 
 \item{pattern}{pattern to search for, a regular expression, e.g.
-\code{"function"} or \code{"^function"}}
+\code{"function"} or \code{"^function"}, or a string if \code{fixed=TRUE};
+by default the pattern is considered as a basic regular expression, but
+this can be changed to an extended regular expression by setting
+\code{extended=TRUE} or to a Perl regular expression by setting
+\code{perl=TRUE}}
 
 \item{depth}{depth of the search, \code{NULL} or a negative number for an
 entire recursive search (subdirectories, subdirectories of subdirectories,
@@ -70,9 +78,19 @@ are found (so there is no gain of efficiency)}
 
 \item{ignoreCase}{logical, whether to ignore the case}
 
+\item{extended}{logical, whether the pattern given in the \code{pattern}
+is an extended regular expression; if \code{TRUE}, you can search for
+multiple patterns by passing a string like \code{"(pattern1|pattern2|...)"}
+to the \code{pattern} argument}
+
+\item{fixed}{logical, whether the pattern given in the \code{pattern}
+argument is a string to be matched as is, or, to search for multiple
+patterns, multiple strings separated by \code{"\n"}}
+
 \item{perl}{logical, whether the pattern given in the \code{pattern}
-argument is a Perl regular expression; useful to search for multiple
-patterns: set \code{perl=TRUE} and \code{pattern="(pattern1|pattern2|...)"}}
+argument is a Perl regular expression; if \code{TRUE}, you can search for
+multiple patterns by passing a string like \code{"(pattern1|pattern2|...)"}
+to the \code{pattern} argument}
 
 \item{includePattern}{this argument is ignored if \code{depth} is not a
 positive integer; it must be a pattern or a vector of patterns, and only
@@ -105,7 +123,7 @@ A tibble if \code{output="tibble"}, otherwise a
 \description{
 Find a pattern in some files. The functions \code{findInFiles}
   and \code{fif} are the same, and \code{fifR(...)} is the same as
-  \code{findInFiles(ext = "R", ...)}.
+  \code{findInFiles(extensions = "R", ...)}.
 }
 \examples{
 library(findInFiles)
