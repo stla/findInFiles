@@ -6,7 +6,8 @@
 #' @name findInFiles
 #' @rdname findInFiles
 #'
-#' @param ext file extension, e.g. \code{"R"} or \code{"js"}
+#' @param extensions extension(s) of the files to include in the search,
+#'   e.g. \code{"R"} or \code{"js"} or \code{c("R", "Rmd")}
 #' @param pattern pattern to search for, a regular expression, e.g.
 #'   \code{"function"} or \code{"^function"}
 #' @param depth depth of the search, \code{NULL} or a negative number for an
@@ -66,7 +67,7 @@
 #'   excludePattern = c("*.min.css", "selectize*", "shiny*")
 #' )
 findInFiles <- function(
-  ext, pattern, depth = NULL, maxCountPerFile = NULL, maxCount = NULL,
+  extensions, pattern, depth = NULL, maxCountPerFile = NULL, maxCount = NULL,
   wholeWord = FALSE, ignoreCase = FALSE, perl = FALSE,
   includePattern = NULL,
   excludePattern = NULL, excludeFoldersPattern = NULL,
@@ -78,12 +79,12 @@ findInFiles <- function(
     return(invisible(NULL))
   }
 
-  stopifnot(isString(ext))
-
-  if(isBinaryExtension(ext)){
-    stop(
-      sprintf("This file extension ('%s') is not allowed.", ext)
-    )
+  for(ext in extensions) {
+    if(isBinaryExtension(ext)){
+      stop(
+        sprintf("This file extension ('%s') is not allowed.", ext)
+      )
+    }
   }
 
   stopifnot(isString(output))
@@ -108,7 +109,7 @@ findInFiles <- function(
   )
 
   results <- grepInFiles(
-    ext = ext, pattern = pattern, depth = depth,
+    ext = extensions, pattern = pattern, depth = depth,
     maxCountPerFile = maxCountPerFile, maxCount = maxCount,
     wholeWord = wholeWord, ignoreCase = ignoreCase, perl = perl,
     includePattern = includePattern,

@@ -1,5 +1,8 @@
 # findInFiles 0.5.0
 
+* The argument `ext` of the `findInFiles` function has been renamed to 
+`extensions` and it can be a vector of file extensions now.
+
 * The arguments `excludePattern` and `excludeFoldersPattern` of the 
 `findInFiles` function can be some vectors now, to give multiple patterns.
 

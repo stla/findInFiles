@@ -1,19 +1,21 @@
-getFiles <- function(ext, depth){
+getFiles <- function(extensions, depth){
   stopifnot(isPositiveInteger(depth))
-  wildcards <- Reduce(
-    file.path, x = rep("*", depth), init = paste0("*.", ext),
-    right = TRUE, accumulate = TRUE
-  )
+  wildcards <- do.call(c, lapply(extensions, function(ext) {
+    Reduce(
+      file.path, x = rep("*", depth), init = paste0("*.", ext),
+      right = TRUE, accumulate = TRUE
+    )
+  }))
   Sys.glob(wildcards)
 }
 
 #' @importFrom utils head
 #' @noRd
 grepInFiles <- function(
-  ext, pattern, depth, maxCountPerFile, maxCount,
-  wholeWord, ignoreCase, perl,
-  includePattern, excludePattern, excludeFoldersPattern,
-  directory, output
+    ext, pattern, depth, maxCountPerFile, maxCount,
+    wholeWord, ignoreCase, perl,
+    includePattern, excludePattern, excludeFoldersPattern,
+    directory, output
 ){
   if(inSolaris()){
     if(Sys.which("ggrep") == ""){
@@ -24,7 +26,10 @@ grepInFiles <- function(
       stop("This package requires the 'grep' command-line utility.")
     }
   }
-  stopifnot(isString(ext))
+  check <- all(vapply(ext, isString, logical(1L)))
+  if(!check) {
+    stop("Invalid file extension.")
+  }
   stopifnot(isString(pattern))
   stopifnot(isBoolean(wholeWord))
   stopifnot(isBoolean(ignoreCase))

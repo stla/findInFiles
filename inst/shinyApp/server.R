@@ -3,7 +3,7 @@ shinyServer(function(input, output, session){
   iv <- InputValidator$new()
   iv$add_rule(
     "ext",
-    sv_regex("^[a-zA-Z0-9\\+]+$", "Only alphanumeric or 'c++'")
+    sv_regex("^[a-zA-Z0-9\\+,]+$", "Only alphanumeric or 'c++'")
   )
   iv$add_rule("pattern", sv_required())
   iv$add_rule("depth", isPositiveIntegerOrNA)
@@ -222,8 +222,10 @@ shinyServer(function(input, output, session){
 
   output[["results"]] <- renderFIF({
     req(Run())
+    extensions <- strsplit(isolate(input[["ext"]]), ",", fixed = TRUE)[[1L]]
+    extensions <- Filter(function(x) nchar(x) > 0L, extensions)
     fifWidget <- findInFiles(
-      ext        = isolate(input[["ext"]]),
+      extensions = extensions,
       pattern    = isolate(input[["pattern"]]),
       depth      = isolate(Depth()),
       maxCount   = isolate(maxCount()),

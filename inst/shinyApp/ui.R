@@ -23,7 +23,7 @@ shinyUI(fluidPage(
       ),
       br(),
       smallInput(textInput(
-        "ext", "File extension:",
+        "ext", "Extensions (comma-separated):",
         value = "R"
       )),
       textInput(

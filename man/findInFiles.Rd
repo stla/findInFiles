@@ -7,7 +7,7 @@
 \title{Find pattern in files}
 \usage{
 findInFiles(
-  ext,
+  extensions,
   pattern,
   depth = NULL,
   maxCountPerFile = NULL,
@@ -23,7 +23,7 @@ findInFiles(
 )
 
 fif(
-  ext,
+  extensions,
   pattern,
   depth = NULL,
   maxCountPerFile = NULL,
@@ -41,7 +41,8 @@ fif(
 fifR(...)
 }
 \arguments{
-\item{ext}{file extension, e.g. \code{"R"} or \code{"js"}}
+\item{extensions}{extension(s) of the files to include in the search,
+e.g. \code{"R"} or \code{"js"} or \code{c("R", "Rmd")}}
 
 \item{pattern}{pattern to search for, a regular expression, e.g.
 \code{"function"} or \code{"^function"}}
