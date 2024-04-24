@@ -119,7 +119,7 @@ findInFiles <- function(
     ansi <- "No results."
 
   }else if(length(results)>maxResultsToRender && output %in% c("viewer", "viewer+tibble")){
-    ansi <- "Too many resulsts to render, please try to search for a more precise pattern or search in a smaller directory."
+    ansi <- paste0("Too many resulsts to render (",length(results),"), please try to search for a more precise pattern or search in a smaller directory.")
   }else{
     ansi <- paste0(results, collapse = "\n")
   }
