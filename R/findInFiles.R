@@ -55,7 +55,10 @@
 #'   for \code{grep} experts
 #' @param root path to the root directory to search from
 #' @param output one of \code{"viewer"}, \code{"tibble"} or
-#'   \code{"viewer+tibble"}; see examples
+#'   \code{"viewer+tibble"}; set \code{"tibble"} to get a tibble,
+#'   \code{"viewer"} to get a \code{"htmlwidget"}, and \code{"viewer+tibble"}
+#'   to get a \code{"htmlwidget"} from which you can extract a tibble
+#'   with the function \code{\link{FIF2tibble}}
 #' @param ... arguments other than \code{extensions} passed to
 #'   \code{findInFiles}
 #'
@@ -140,20 +143,21 @@ findInFiles <- function(
     directory = root, output = output
   )
 
+  resultsDF <- NULL
   if(output %in% c("tibble", "viewer+tibble")){
     if(output == "viewer+tibble"){
       strippedResults <- strip_style(results)
     }else{
       strippedResults <- results
     }
-    resultsMatrix <- stringr::str_split_fixed(strippedResults, ":", n = 3L)
-    colnames(resultsMatrix) <- c("file", "line", "code")
+    resultsMatrix <- str_split_fixed(strippedResults, ":", n = 3L)
+    colnames(resultsMatrix) <- c("file", "line", "match")
     resultsDF <- as.data.frame(resultsMatrix, stringsAsFactors = FALSE)
     resultsDF[["line"]] <- as.integer(resultsDF[["line"]])
     if(!is.null(results)){
       opts <- attr(results, "options")
-      resultsDF[["code"]] <- do.call(
-        function(...){redifyVector(resultsDF[["code"]], ...)}, opts
+      resultsDF[["match"]] <- do.call(
+        function(...){redifyVector(resultsDF[["match"]], ...)}, opts
       )
     }
     resultsDF <- tibble(resultsDF)
@@ -172,22 +176,10 @@ findInFiles <- function(
     ansi <- paste0(results, collapse = "\n")
   }
 
-  # forward options using x
-  if(output == "viewer"){
-    x = list(
-      ansi = ansi
-    )
-  }else{ # viewer+tibble
-    x = list(
-      ansi = ansi,
-      results = resultsDF
-    )
-  }
-
   # create widget
   widget <- createWidget(
     name = "findInFiles",
-    x = x,
+    x = list("ansi" = ansi),
     width = NULL,
     height = NULL,
     package = "findInFiles",
@@ -195,6 +187,7 @@ findInFiles <- function(
   )
   attr(widget, "maxCountExceeded") <- maxCountExceeded
   attr(widget, "numberOfResults")  <- numberOfResults
+  attr(widget, "tibble")           <- resultsDF
   widget
 
 }
@@ -237,10 +230,11 @@ FIF2tibble <- function(fif){
       call. = TRUE
     )
   }
-  output <- fif[["x"]][["results"]]
+  output <- attr(fif, "tibble")
   if(is.null(output)){
     message(
-      'You did not set the option `output = "viewer+tibble"`.'
+      'You did not set the option `output = "viewer+tibble"` ',
+      ' in the call to `findInFiles`.'
     )
     return(invisible(NULL))
   }
@@ -271,6 +265,6 @@ FIF2dataframe <- function(fif){
   if(is.null(tbl)){
     return(NULL)
   }
-  tbl[["code"]] <- vec_data(strip_style(tbl[["code"]]))
+  tbl[["match"]] <- vec_data(strip_style(tbl[["match"]]))
   as.data.frame(tbl)
 }
