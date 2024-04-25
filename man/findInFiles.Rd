@@ -112,8 +112,8 @@ for \code{grep} experts}
 
 \item{output}{one of \code{"viewer"}, \code{"tibble"} or
 \code{"viewer+tibble"}; set \code{"tibble"} to get a tibble,
-\code{"viewer"} to get a \code{"htmlwidget"}, and \code{"viewer+tibble"}
-to get a \code{"htmlwidget"} from which you can extract a tibble
+\code{"viewer"} to get a \code{htmlwidget}, and \code{"viewer+tibble"}
+to get a \code{htmlwidget} from which you can extract a tibble
 with the function \code{\link{FIF2tibble}}}
 
 \item{...}{arguments other than \code{extensions} passed to
