@@ -4,7 +4,7 @@
 \alias{findInFiles-shiny}
 \alias{FIFOutput}
 \alias{renderFIF}
-\title{Shiny bindings for \code{findInFiles}}
+\title{Shiny bindings for 'findInFiles'}
 \usage{
 FIFOutput(outputId, width = "100\%", height = "400px")
 
@@ -94,10 +94,10 @@ server <- function(input, output){
   output[["results"]] <- renderFIF({
     req(input[["pattern"]])
     findInFiles(
-      ext = isolate(input[["ext"]]),
-      pattern = input[["pattern"]],
-      depth = isolate(input[["depth"]]),
-      wholeWord = isolate(input[["wholeWord"]]),
+      extensions = isolate(input[["ext"]]),
+      pattern    = input[["pattern"]],
+      depth      = isolate(input[["depth"]]),
+      wholeWord  = isolate(input[["wholeWord"]]),
       ignoreCase = isolate(input[["ignoreCase"]])
     )
   })

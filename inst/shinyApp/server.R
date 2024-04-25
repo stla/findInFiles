@@ -3,7 +3,7 @@ shinyServer(function(input, output, session){
   iv <- InputValidator$new()
   iv$add_rule(
     "ext",
-    sv_regex("^[a-zA-Z0-9\\+,]+$", "Only alphanumeric or 'c++'")
+    sv_regex("^[a-zA-Z0-9\\+,]+$", "Only alphanumeric or 'c++'.")
   )
   iv$add_rule("pattern", sv_required())
   iv$add_rule("depth", isPositiveIntegerOrNA)

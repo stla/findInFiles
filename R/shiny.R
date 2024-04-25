@@ -1,4 +1,4 @@
-#' @title Shiny bindings for \code{findInFiles}
+#' @title Shiny bindings for 'findInFiles'
 #'
 #' @description Output and render functions for using \code{findInFiles} within
 #'   Shiny applications and interactive Rmd documents.
@@ -81,10 +81,10 @@
 #'   output[["results"]] <- renderFIF({
 #'     req(input[["pattern"]])
 #'     findInFiles(
-#'       ext = isolate(input[["ext"]]),
-#'       pattern = input[["pattern"]],
-#'       depth = isolate(input[["depth"]]),
-#'       wholeWord = isolate(input[["wholeWord"]]),
+#'       extensions = isolate(input[["ext"]]),
+#'       pattern    = input[["pattern"]],
+#'       depth      = isolate(input[["depth"]]),
+#'       wholeWord  = isolate(input[["wholeWord"]]),
 #'       ignoreCase = isolate(input[["ignoreCase"]])
 #'     )
 #'   })

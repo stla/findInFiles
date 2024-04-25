@@ -59,6 +59,7 @@
 #'   \code{"viewer"} to get a \code{htmlwidget}, and \code{"viewer+tibble"}
 #'   to get a \code{htmlwidget} from which you can extract a tibble
 #'   with the function \code{\link{FIF2tibble}}
+#' @param elementId a HTML id, usually useless
 #' @param ... arguments other than \code{extensions} passed to
 #'   \code{findInFiles}
 #'
@@ -94,7 +95,7 @@ findInFiles <- function(
   includePattern = NULL,
   excludePattern = NULL, excludeFoldersPattern = NULL,
   moreOptions = NULL,
-  root = ".", output = "viewer"
+  root = ".", output = "viewer", elementId = NULL
 ){
 
   if(inSolaris() && Sys.which("ggrep") == ""){
@@ -183,7 +184,7 @@ findInFiles <- function(
     width = NULL,
     height = NULL,
     package = "findInFiles",
-    elementId = NULL
+    elementId = elementId
   )
   attr(widget, "maxCountExceeded") <- maxCountExceeded
   attr(widget, "numberOfResults")  <- numberOfResults

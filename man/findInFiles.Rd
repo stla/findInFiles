@@ -22,7 +22,8 @@ findInFiles(
   excludeFoldersPattern = NULL,
   moreOptions = NULL,
   root = ".",
-  output = "viewer"
+  output = "viewer",
+  elementId = NULL
 )
 
 fif(
@@ -41,7 +42,8 @@ fif(
   excludeFoldersPattern = NULL,
   moreOptions = NULL,
   root = ".",
-  output = "viewer"
+  output = "viewer",
+  elementId = NULL
 )
 
 fifR(...)
@@ -115,6 +117,8 @@ for \code{grep} experts}
 \code{"viewer"} to get a \code{htmlwidget}, and \code{"viewer+tibble"}
 to get a \code{htmlwidget} from which you can extract a tibble
 with the function \code{\link{FIF2tibble}}}
+
+\item{elementId}{a HTML id, usually useless}
 
 \item{...}{arguments other than \code{extensions} passed to
 \code{findInFiles}}
