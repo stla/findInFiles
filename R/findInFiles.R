@@ -206,7 +206,7 @@ fif <- findInFiles
 #' @rdname findInFiles
 #' @export
 fifR <- function(...) {
-  findInFiles(ext = "R", ...)
+  findInFiles(extensions = "R", ...)
 }
 
 #' @title Output of `findInFiles` as a tibble
