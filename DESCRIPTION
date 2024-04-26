@@ -1,7 +1,7 @@
 Type: Package
 Package: findInFiles
 Title: Find Pattern in Files
-Version: 0.4.0.9000
+Version: 0.5.0
 Authors@R: c(
     person("Stéphane", "Laurent", , "laurent_step@outlook.fr", role = c("aut", "cre")),
     person("Rob", "Burns", role = c("ctb", "cph"),
