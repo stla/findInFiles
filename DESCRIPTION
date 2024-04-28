@@ -12,7 +12,7 @@ Description: Creates a HTML widget which displays the results of searching
     the 'RStudio' viewer pane, included in a 'R Markdown' document or in a 
     'Shiny' application. Also provides a 'Shiny' application allowing to run 
     this widget and to navigate in the files found by the search. Instead of
-    creating a HTML widget, it is also possible to get the resuts of the 
+    creating a HTML widget, it is also possible to get the results of the 
     search in a 'tibble'. The search is performed by the 'grep' command-line 
     utility.
 License: GPL-3
